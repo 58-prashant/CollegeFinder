@@ -3,49 +3,96 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\SignupRequest;
-use App\Models\User;
-use http\Env\Response;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
 
 class AuthController extends Controller
 {
-    public function signup(SignupRequest $request)
+    public function register(Request $request) 
     {
-        $data = $request->validated();
-        /** @var \App\Models\User $user */
+       $validator = Validator::make($request->all(),[
+        'name'=>'required',
+        'email'=>'required|email|max:191|unique:users,email',
+        'password' => [
+                        'required',
+                        'min:8',
+                        'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/'
+                        ],
+        'address'=>'required',
+       ]);
+       if ($validator->fails()){
+        return response()->json([
+            'validation_errors'=>$validator->messages(),
+        ]);
+       }else{
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+            'address'=>$request->address,
+            'status' => 0,
+        ]);
+         $token = $user->createToken($user->email.'_Token')->plainTextToken;
+         return response()->json([
+            'status'=>200,
+            'username'=>$user->name,
+            'token'=>$token,
+            'message'=>'Registered successfully!'
+        ]);
+       }
+
+        
+    }
+
+    public function login(Request $request){
+        $validator = Validator::make($request->all(),[
+            'email'=>'required|max:191|email',
+            'password' => 'required',
+        ]);
+        if($validator->fails()){
+          return response()->json([
+            'validation_errors'=>$validator->messages(),
+        ]);  
+        }else{
+
+            $user = User::where('email',$request->email)->first();
+            if(! $user || ! Hash::check($request->password,$user->password)){
+                return response()->json([
+                    'status'=>401,
+                    'message'=>'Invalid Credentials',
+                ]);
+            }
+            else{
+                 $token = $user->createToken($user->email.'_Token')->plainTextToken;
+                return response()->json([
+                    'status'=>200,
+                    'username'=>$user->name,
+                    'token'=>$token,
+                    'message'=>'Logged In successfully!'
+                ]);
+            }
+        }
+    }
+
+    public function logout(){
+        auth()->user()->tokens()->delete();
+        return response()->json([
+            "status"=>200,
+            "message"=>'Logged out Successfully',
         ]);
 
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
     }
 
-    public function login(LoginRequest $request)
-    {
-        $credentials = $request->validated();
-        if (!Auth::attempt($credentials)) {
-            return response([
-                'message' => 'Provided email or password is incorrect'
-            ], 422);
-        }
-
-        /** @var \App\Models\User $user */
-        $user = Auth::user();
-        $token = $user->createToken('main')->plainTextToken;
-        return response(compact('user', 'token'));
+    public function verification(){
+        $code = rand(1000,9999);
+        return response()->json([
+            'code'=>$code
+        ]);
     }
-
-    public function logout(Request $request)
-    {
-        /** @var \App\Models\User $user */
-        $user = $request->user();
-        $user->currentAccessToken()->delete();
-        return response('', 204);
-    }
+    
 }

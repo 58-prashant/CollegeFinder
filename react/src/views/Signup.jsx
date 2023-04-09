@@ -37,7 +37,13 @@ export default function Signup() {
     <div className="login-signup-form animated fadeInDown">
       <div className="form">
         <form onSubmit={onSubmit}>
-          <img className="form-logo" src="logo.svg" alt="logo" />
+          <div className="intro-row">
+            <img className="form-logo" src="Logo.svg" alt="logo" />
+            <div className="intro-title">
+              <h1 className="title">Welcome To</h1>
+              <h1 className="sikshya">Sikhya Khoji</h1>
+            </div>
+          </div>
           <h1 className="title">Signup for Free</h1>
 
           <input ref={nameRef} type="text" placeholder="Full Name" />

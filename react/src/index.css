@@ -46,6 +46,7 @@ input {
 input:focus {
     border-color: #FFBF75;
 }
+
 /* buttons */
 .btn{
     font-family: "Roboto", sans-serif;
@@ -55,7 +56,7 @@ input:focus {
     border-radius: 10px;
     text-decoration: none;
     padding: 15px;
-    color: #000;
+    color: #392727;
     font-size: 16px;
     -webkit-transition: all 0.3 ease;
     transition: all 0.3 ease;
@@ -89,11 +90,21 @@ input:focus {
     margin-bottom: 1rem;
 }
 /* logo */
+.intro-row{
+    display: flex;
+    padding-bottom: 20px;
+}
+.intro-title{
+    flex: 33.33%;
+    margin-left: 10px;
+    margin-top: 1php0px;
+}
 .form-logo{
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;  
+    align-content: center;
+    align-items: center;
+    width: 35%;
+      
 }
 .logo{
     display: block;
@@ -106,6 +117,7 @@ input:focus {
 .search{
     text-decoration: none;
 }
+
 /* Login/Signup forms*/
 .login-signup-form {
     height: 100vh;
@@ -125,7 +137,7 @@ input:focus {
 }
 .login-signup-form .title {
 
-    font-size: 20px;
+    font-size: 18px;
     color: #ffffff;
     margin-bottom: 1rem;
     text-align: left;
@@ -133,6 +145,7 @@ input:focus {
 .login-signup-form .sikshya {
     font-size: 20px;
     margin-bottom: 1rem;
+    margin-left: 2rem;
     color: #F49F1C;
     text-align: center;
 }
@@ -206,6 +219,13 @@ input:focus {
 .fadeInDown {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
+}
+.forget{
+    color: #FFF;
+   
+}
+.error{
+    color: rgb(247, 96, 96);
 }
 @keyframes fadeInDown {
     0% {

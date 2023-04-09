@@ -1,16 +1,18 @@
-import {Navigate, Outlet} from "react-router-dom";
-import { useStateContext } from "../context/ContextProvider";
+import { Navigate, Outlet } from "react-router-dom";
+import { useState } from "react";
 
-export default function GuestLayout() {
-  const { user, token } = useStateContext();
+import './guestLayout.css';
 
-  if (token) {
-    return <Navigate to="/" />;
-  }
+function GuestLayout() {
+    
+    if (localStorage.getItem('auth_token')) {
+        return <Navigate to="/" />;
+    }
+    return (
+        <div className="body-image" >
+            <Outlet />
 
-  return (
-    <div id="guestLayout">
-      <Outlet />
-    </div>
-  );
+        </div>
+    );
 }
+export default GuestLayout;
