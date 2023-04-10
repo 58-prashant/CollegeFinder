@@ -1,9 +1,17 @@
-import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
+import {
+    Link,
+    Navigate,
+    Outlet,
+    useLocation,
+    useNavigate,
+} from "react-router-dom";
 import axios from "axios";
-import { useEffect } from "react";
+import {  useEffect, useState } from "react";
 
 function DefaultLayout() {
     const navigate = useNavigate();
+    const [user,setUser] = useState("");
+    const location = useLocation();
     const type = localStorage.getItem("ac_type");
     if (type != 0) {
         return <Navigate to="/admin" />;
@@ -11,7 +19,10 @@ function DefaultLayout() {
     if (!localStorage.getItem("auth_token")) {
         return <Navigate to="/login" />;
     }
-
+    useEffect(()=>{
+        setUser(localStorage.getItem("auth_user"));
+    },[])
+    
     const onLogout = (e) => {
         e.preventDefault();
         axios.post("/api/logout").then((res) => {
@@ -31,22 +42,38 @@ function DefaultLayout() {
                     <img className="logo" src="Logo.svg" alt="Logo" />
                 </Link>
 
-                <Link to="/">
-                    <span className="bi bi-house-fill"></span>Home
+                <Link
+                    className={location.pathname === "/" ? "active" : ""}
+                    to="/"
+                >
+                    <i className="bi bi-house-door-fill"></i>Home
                 </Link>
-                <Link to="/user">
+                <Link
+                    className={location.pathname === "/user" ? "active" : ""}
+                    to="/user"
+                >
                     <span className="bi bi-person-circle"></span>Profile
                 </Link>
-                <Link to="/bookmark">
+                <Link
+                    className={
+                        location.pathname === "/bookmark" ? "active" : ""
+                    }
+                    to="/bookmark"
+                >
                     <span className="bi bi-bookmarks-fill"></span>Bookmark
                 </Link>
-                <Link to="/search">
+                <Link
+                    className={location.pathname === "/search" ? "active" : ""}
+                    to="/search"
+                >
                     <span className="bi bi-search"></span>Search
                 </Link>
             </aside>
             <div className="content">
                 <header>
-                    <div>Header</div>
+                    <Link className="user" to="/user">
+                        <span className="bi bi-person-circle"></span>{user}
+                    </Link>
 
                     <div>
                         <a onClick={onLogout} className="btn-logout" href="#">

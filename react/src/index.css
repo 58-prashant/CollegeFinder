@@ -90,22 +90,7 @@ input:focus {
     margin-bottom: 1rem;
 }
 /* logo */
-.intro-row{
-    display: flex;
-    padding-bottom: 20px;
-}
-.intro-title{
-    flex: 33.33%;
-    margin-left: 10px;
-    margin-top: 1php0px;
-}
-.form-logo{
-    display: block;
-    align-content: center;
-    align-items: center;
-    width: 35%;
-      
-}
+
 .logo{
     display: block;
     margin-left: auto;
@@ -113,62 +98,30 @@ input:focus {
     width: 80%; 
 
 }
-/* search */
-.search{
-    text-decoration: none;
-}
-
-/* Login/Signup forms*/
-.login-signup-form {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.login-signup-form .form {
-    border-radius: 20px;
-    width: 420px;
-    position: relative;
-    z-index: 1;
-    background: #023047;
-    /* max-width: 360px; */
-    padding: 34px;
-    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.576);
-}
-.login-signup-form .title {
-
-    font-size: 18px;
+.title{
+     font-size: 18px;
     color: #ffffff;
     margin-bottom: 1rem;
     text-align: left;
 }
-.login-signup-form .sikshya {
-    font-size: 20px;
+.sikshya{
+     font-size: 20px;
     margin-bottom: 1rem;
     margin-left: 2rem;
     color: #F49F1C;
     text-align: center;
 }
-.login-signup-form .form .message {
-    margin: 15px 0 0;
-    color: #ffffff;
-    font-size: 16px;
-    text-align: center;
-}
-.login-signup-form .form .message a {
-    color: #FFBF75;
+/* search */
+.search{
     text-decoration: none;
 }
-.login-signup-form .form .message a:hover {
-    color: #f8b568;
-    text-decoration: none;
-    text-decoration: underline;
-}
+
+
 /* Dashboard */
 .card {
     background-color: #fff;
     border-radius: 0.5rem;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.806);
     padding: 1.25rem 1.5rem;
     margin-bottom: 1rem;
     margin-top: 0.5rem;
@@ -178,9 +131,24 @@ input:focus {
 }
 
 #defaultLayout aside {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
     width: 240px;
     background-color: #023047;
     padding: 1rem;
+    position: fixed;
+    height: 100%;
+    z-index: 1;
+}
+main{
+    margin-left: 160px;
 }
 #defaultLayout aside > a {
     display: block;
@@ -190,22 +158,83 @@ input:focus {
     text-decoration: none;
     transition: all 0.2s;
 }
+#defaultLayout .user{
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 250px;
+    color: #023047;
+}
 #defaultLayout aside > a:hover {
     background-color: rgba(0, 0, 0, 0.2);
+}
+#defaultLayout a.active{
+    background-color: #011018;
+    font-weight: bold;
+
 }
 
 #defaultLayout .content {
     flex: 1;
 }
+
 #defaultLayout header {
     height: 80px;
     padding: 2rem 3rem;
+    width: 100%;
     background-color: white;
     color: #000;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+.intro-title{
+    flex: 33.33%;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+/*admin layout */
+#adminLayout {
+    display: flex;
+}
+
+#adminLayout aside {
+    width: 240px;
+    background-color: #023047;
+    padding: 1rem;
+}
+#adminLayout aside > a {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+#adminLayout aside > a:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#adminLayout .content {
+    flex: 1;
+}
+#adminLayout header {
+    height: 80px;
+    padding: 2rem 3rem;
+    background-color: white;
+    width: 100%;
+    color: #000;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bi{
+    padding-right: 15px;
+    margin-left: 10px;
+    
 }
 
 /* animation */

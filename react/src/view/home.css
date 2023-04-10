@@ -1,0 +1,22 @@
+.card{
+    text-decoration: none;
+    align-items: center;
+}
+.link{
+    
+    text-decoration: none;
+}
+.college{
+    margin-left: 100px;
+}
+.info{
+    display: inline-flex;
+    flex-wrap: wrap;
+    
+}
+.info p{
+    margin-right: 10px;
+}
+.link h2{
+    color: #000;
+}
