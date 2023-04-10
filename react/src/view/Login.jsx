@@ -11,24 +11,33 @@ function Login() {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
-       const payload = {
-           email: emailRef.current.value,
-           password: passwordRef.current.value,
-       };
+
+        const payload = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        };
 
         axios.get("/sanctum/csrf-cookie").then((response) => {
             axios.post("/api/login", payload).then((res) => {
-                 if(res.data.status === 200)
-                {
-                    
-                    navigate("/otp-verification",{state:{
-                        token: res.data.token,
-                        user: res.data.username,
-                        }});
-                    
-                }else if (res.data.status === 401) {
-                    swal("Warning", res.data.message,"warning");
+                if (res.data.status === 200) {
+                    if (res.data.account != 1) {
+                        navigate("/otp-verification", {
+                            state: {
+                                token: res.data.token,
+                                user: res.data.username,
+                                status: res.data.account,
+                            },
+                        });
+                    } else {
+                        localStorage.setItem("auth_token", res.data.token);
+                        localStorage.setItem("ac_type", res.data.account);
+                        localStorage.setItem("auth_user", res.data.token);
+                        swal("Success", "Logged In", "success");
+                        console.log("admin");
+                        navigate("/");
+                    }
+                } else if (res.data.status === 401) {
+                    swal("Warning", res.data.message, "warning");
                 } else {
                     setError(res.data.validation_errors);
                 }
@@ -52,7 +61,11 @@ function Login() {
                     <span className="error">{error.email}</span>
                     <input ref={emailRef} type="email" placeholder="Email" />
                     <span className="error">{error.password}</span>
-                    <input ref={passwordRef} type="password" placeholder="Password" />
+                    <input
+                        ref={passwordRef}
+                        type="password"
+                        placeholder="Password"
+                    />
                     <Link className="forget" to="/">
                         Forget password?
                     </Link>

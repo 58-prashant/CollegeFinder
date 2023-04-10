@@ -1,24 +1,27 @@
-import {Navigate, createBrowserRouter} from 'react-router-dom';
-import GuestLayout from './components/GuestLayout';
-import Home from './view/Home';
-import DefaultLayout from './components/DefaultLayout';
-import Login from './view/Login';
-import Register from './view/Register';
-import PageNotFound from './view/PageNotFound';
-import User from './view/User';
-import axios from 'axios';
-import { Verification } from './view/Verification';
+import { Navigate, createBrowserRouter } from "react-router-dom";
+import GuestLayout from "./components/GuestLayout";
+import Home from "./view/Home";
+import DefaultLayout from "./components/DefaultLayout";
+import Login from "./view/Login";
+import Register from "./view/Register";
+import PageNotFound from "./view/PageNotFound";
+import User from "./view/User";
+import axios from "axios";
+import { Verification } from "./view/Verification";
+import { AdminLayout } from "./components/AdminLayout";
+import { Dashboard } from "./view/admin/Dashboard";
+import { Profile } from "./view/admin/Profile";
+
 
 axios.defaults.baseURL = "http://localhost:8000/";
 axios.defaults.headers.post["Content-Type"] = "application/json";
-axios.defaults.headers.post['Accept']= 'application/json';
+axios.defaults.headers.post["Accept"] = "application/json";
 axios.defaults.withCredentials = true;
-axios.interceptors.request.use(function(config){
-    const token = localStorage.getItem('auth_token');
-    config.headers.Authorization = token? `Bearer ${token}`:'';
+axios.interceptors.request.use(function (config) {
+    const token = localStorage.getItem("auth_token");
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
     return config;
-
-})
+});
 
 const router = createBrowserRouter([
     {
@@ -30,9 +33,9 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path:"/user",
-                element:<User/>
-            }
+                path: "/user",
+                element: <User />,
+            },
         ],
     },
     {
@@ -48,8 +51,22 @@ const router = createBrowserRouter([
                 element: <Register />,
             },
             {
-                path:'/otp-verification',
-                element:<Verification/>,
+                path: "/otp-verification",
+                element: <Verification />,
+            },
+        ],
+    },
+    {
+        path: "/",
+        element: <AdminLayout />,
+        children: [
+            {
+                path: "/admin-dashboard",
+                element: <Dashboard />,
+            },
+            {
+                path: "/admin",
+                element: <Profile />,
             },
         ],
     },
@@ -57,5 +74,6 @@ const router = createBrowserRouter([
         path: "*",
         element: <PageNotFound />,
     },
+   
 ]);
 export default router;

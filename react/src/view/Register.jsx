@@ -8,14 +8,13 @@ function Register() {
     const emailRef = useRef();
     const passwordRef = useRef();
     const addressRef = useRef();
-   
 
-    const [error,setError] = useState([]);
+    const [error, setError] = useState([]);
     const navigate = useNavigate();
 
     const onSubmit = async (e) => {
         e.preventDefault();
-       
+
         const payload = {
             name: nameRef.current.value,
             email: emailRef.current.value,
@@ -24,21 +23,20 @@ function Register() {
         };
         console.log(payload);
         axios.get("/sanctum/csrf-cookie").then((response) => {
-            axios.post("/api/register",payload).then((res) =>{
-                if(res.data.status === 200)
-                {
-                    
-                    navigate("/otp-verification",{state:{
-                        token: res.data.token,
-                        user: res.data.username,
-                        }});
-                    
-                }else{
+            axios.post("/api/register", payload).then((res) => {
+                if (res.data.status === 200) {
+                    navigate("/otp-verification", {
+                        state: {
+                            token: res.data.token,
+                            user: res.data.username,
+                            status: res.data.account,
+                        },
+                    });
+                } else {
                     setError(res.data.validation_errors);
                 }
             });
         });
-       
     };
     return (
         <div className="login-signup-form animated fadeInDown">
