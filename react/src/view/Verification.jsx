@@ -25,6 +25,7 @@ export function Verification() {
             localStorage.setItem("auth_token", location.state.token);
             localStorage.setItem("auth_user", location.state.user);
             localStorage.setItem("ac_type", location.state.status);
+            localStorage.setItem("email", location.state.email);
             swal("Success", "OTP Matched", "success");
             navigate("/");
         } else {

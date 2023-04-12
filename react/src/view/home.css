@@ -1,10 +1,16 @@
+body{
+    background-color: rgb(234, 232, 232);
+}
 .card{
     text-decoration: none;
     align-items: center;
 }
 .link{
-    
+    margin-top: 100px;
     text-decoration: none;
+}
+.header{
+    margin-top: 100px;
 }
 .college{
     margin-left: 100px;

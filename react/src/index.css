@@ -62,6 +62,13 @@ input:focus {
     transition: all 0.3 ease;
     cursor: pointer;
 }
+.btn-edit{
+    margin-top: 40px;
+}
+header{
+    position: fixed;
+}
+
 .btn-block {
     width: 100%;
 }
@@ -70,6 +77,15 @@ input:focus {
 }
 .text-center {
     text-align: center;
+}
+.userData{
+    color: #000;
+    text-align: center;
+     align-content: center;
+}
+.userData .card{
+   
+    
 }
 .btn-logout {
     text-decoration: none;

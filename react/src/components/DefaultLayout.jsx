@@ -7,12 +7,15 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 import {  useEffect, useState } from "react";
+import './default.css';
 
 function DefaultLayout() {
     const navigate = useNavigate();
     const [user,setUser] = useState("");
+    const[data,setData] = useState([]);
     const location = useLocation();
     const type = localStorage.getItem("ac_type");
+    const email = localStorage.getItem("email");
     if (type != 0) {
         return <Navigate to="/admin" />;
     }
@@ -21,6 +24,14 @@ function DefaultLayout() {
     }
     useEffect(()=>{
         setUser(localStorage.getItem("auth_user"));
+        axios
+            .post("/api/user-profile", { email })
+            .then((res) => {
+                setData(res.data.user);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     },[])
     
     const onLogout = (e) => {
@@ -30,6 +41,7 @@ function DefaultLayout() {
                 localStorage.removeItem("auth_token");
                 localStorage.removeItem("auth_user");
                 localStorage.removeItem("ac_type");
+                localStorage.removeItem("email");
                 swal("Success", res.data.message, "success");
                 navigate("/login");
             }
@@ -39,7 +51,7 @@ function DefaultLayout() {
         <div id="defaultLayout">
             <aside>
                 <Link to="/">
-                    <img className="logo" src="Logo.svg" alt="Logo" />
+                    <img className="logo" src="Logo.png" alt="Logo" />
                 </Link>
 
                 <Link
@@ -72,7 +84,23 @@ function DefaultLayout() {
             <div className="content">
                 <header>
                     <Link className="user" to="/user">
-                        <span className="bi bi-person-circle"></span>{user}
+                        <div>
+                            {data.profile_path ? (
+                                <div className="border">
+                                <img
+                                    className="pp"
+                                    src={
+                                        "http://localhost:8000/" +
+                                        data.profile_path
+                                    }
+                                    // alt="profile picture"
+                                />
+                                </div>
+                            ) : (
+                                <span className="bi bi-person-circle"></span>
+                            )}
+                        </div>
+                        {user}
                     </Link>
 
                     <div>

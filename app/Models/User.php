@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'address',
         'status',
+        'dob',
+        'profile_path',
     ];
 
     /**

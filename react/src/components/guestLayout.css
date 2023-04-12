@@ -18,7 +18,66 @@
    
     
 }
+.intro-row{
+    display: flex;
+    padding-bottom: 20px;
+}
+
+.form-logo{
+    display: block;
+    align-content: center;
+    align-items: center;
+    width: 35%;
+      
+}
+
 .login-signup-form{
     backdrop-filter: blur(2px);
     background-color: rgba(0, 0, 0, 0.333);
+}
+/* Login/Signup forms*/
+.login-signup-form {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-signup-form .form {
+    border-radius: 20px;
+    width: 420px;
+    position: relative;
+    z-index: 1;
+    background: #023047;
+    /* max-width: 360px; */
+    padding: 34px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.576);
+}
+.login-signup-form .title {
+
+    font-size: 18px;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-align: left;
+}
+.login-signup-form .sikshya {
+    font-size: 20px;
+    margin-bottom: 1rem;
+    margin-left: 2rem;
+    color: #F49F1C;
+    text-align: center;
+}
+.login-signup-form .form .message {
+    margin: 15px 0 0;
+    color: #ffffff;
+    font-size: 16px;
+    text-align: center;
+}
+.login-signup-form .form .message a {
+    color: #FFBF75;
+    text-decoration: none;
+}
+.login-signup-form .form .message a:hover {
+    color: #f8b568;
+    text-decoration: none;
+    text-decoration: underline;
 }

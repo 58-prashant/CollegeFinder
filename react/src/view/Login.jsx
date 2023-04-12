@@ -26,12 +26,14 @@ function Login() {
                                 token: res.data.token,
                                 user: res.data.username,
                                 status: res.data.account,
+                                email:res.data.email,
                             },
                         });
                     } else {
                         localStorage.setItem("auth_token", res.data.token);
                         localStorage.setItem("ac_type", res.data.account);
                         localStorage.setItem("auth_user", res.data.token);
+                        localStorage.setItem("email", res.data.email);
                         swal("Success", "Logged In", "success");
                         console.log("admin");
                         navigate("/");

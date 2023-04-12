@@ -30,6 +30,7 @@ function Register() {
                             token: res.data.token,
                             user: res.data.username,
                             status: res.data.account,
+                            email: res.data.email,
                         },
                     });
                 } else {

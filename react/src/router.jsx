@@ -11,6 +11,8 @@ import { Verification } from "./view/Verification";
 import { AdminLayout } from "./components/AdminLayout";
 import { Dashboard } from "./view/admin/Dashboard";
 import { Profile } from "./view/admin/Profile";
+import EditUser from "./view/EditUser";
+import ViewCollege from "./view/ViewCollege";
 
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
             {
                 path: "/user",
                 element: <User />,
+            },
+            {
+                path: "/edit-user/:id",
+                element: <EditUser />,
+            },
+            {
+                path: "/view-college/:id",
+                element: <ViewCollege />,
             },
         ],
     },
@@ -74,6 +84,5 @@ const router = createBrowserRouter([
         path: "*",
         element: <PageNotFound />,
     },
-   
 ]);
 export default router;

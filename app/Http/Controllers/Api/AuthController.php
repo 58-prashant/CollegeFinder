@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File; 
 
 
 class AuthController extends Controller
@@ -43,6 +44,7 @@ class AuthController extends Controller
             'username'=>$user->name,
             'token'=>$token,
              'account'=>$user->status,
+             'email'=>$user->email,
             'message'=>'Registered successfully!'
         ]);
        }
@@ -75,6 +77,7 @@ class AuthController extends Controller
                     'username'=>$user->name,
                     'token'=>$token,
                      'account'=>$user->status,
+                     'email'=>$user->email,
                     'message'=>'Logged In successfully!'
                 ]);
             }
@@ -90,6 +93,73 @@ class AuthController extends Controller
 
     }
 
+    public function user(Request $request){
+         $user = User::where('email',$request->email)->first();
+        
+        return(['user'=>$user]);
+    }
+    public function editUser($id){
+        $data = User::find($id);
+        if($data){
+            return response()->json([
+                'status'=>200,
+                'data'=>$data,
+            ]);
+        }else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'No user found'
+            ]);
+        }
+        
+    }
+    public function updateUser(Request $request, $id){
+        $validator = Validator::make($request ->all(),
+        [
+            'name'=>'required',
+            'address'=>'required',
+            'dob' =>'required',
+         ]);
+        
+         if($validator->fails()){
+            return response()->json([
+                'status'=>422,
+                'error'=>$validator->messages(),
+            ]);
+         }
+         else{
+            $user = User::find($id);
+            if($user){
+                $user->name = $request->input('name');
+                $user->dob = $request->input('dob');
+                $user->address = $request->input('address');
+                if($request->hasFile('image')){
+                    $path = $user->profile_path;
+                    if(File::exists($path)){
+                        File::delete($path);
+                    }
+                    $file = $request->file('image');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time().'.'.$extension;
+                    $file->move('uploads/user-profile/',$filename);
+                    $user->profile_path = 'uploads/user-profile/'.$filename;
+                }
+                $user ->update();
+                return response()->json([
+                    'status'=>200,
+                    'message'=>'Updated',
+                ]);
+
+            }else{
+                return response()->json([
+                     'status'=>404,
+                'message'=>'User Not found',
+                ]);
+               
+            }
+         }
+    }
+    
     public function verification(){
         $code = rand(1000,9999);
         return response()->json([

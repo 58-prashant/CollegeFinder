@@ -1,0 +1,42 @@
+body{
+    background-color: rgb(234, 232, 232);
+    color: black;
+}
+h1{
+    padding-bottom: 20px;
+}
+.user-card{
+   font-weight: 600;
+    background-color: white;
+    margin-top: 100px;
+    margin-left: 350px;
+    margin-right: 300px;
+    align-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.806);
+}
+.userinfo-card{
+    font-weight: 600;
+    background-color: white;
+    margin-top: 100px;
+    margin-left: 350px;
+    margin-right: 300px;
+    align-content: center;
+    padding: 70px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.806)
+}
+.bi{
+    font-size: 20px;
+}
+#picon{
+    font-size: 160px;
+    padding-bottom: 100px;
+}
+.btn-edit{
+    /* display: flex; */
+   color: black;
+   margin-left: 2;
+}
