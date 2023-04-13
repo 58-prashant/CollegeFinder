@@ -1,18 +1,26 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import GuestLayout from "./components/GuestLayout";
-import Home from "./view/Home";
-import DefaultLayout from "./components/DefaultLayout";
-import Login from "./view/Login";
-import Register from "./view/Register";
-import PageNotFound from "./view/PageNotFound";
-import User from "./view/User";
 import axios from "axios";
-import { Verification } from "./view/Verification";
-import { AdminLayout } from "./components/AdminLayout";
-import { Dashboard } from "./view/admin/Dashboard";
-import { Profile } from "./view/admin/Profile";
-import EditUser from "./view/EditUser";
-import ViewCollege from "./view/ViewCollege";
+
+import DefaultLayout from "./components/DefaultLayout";
+import Home from "./view/user/Home";
+import User from "./view/user/User";
+import EditUser from "./view/user/EditUser";
+import ViewCollege from "./view/user/ViewCollege";
+
+import GuestLayout from "./components/GuestLayout";
+import Login from "./view/user/Login";
+import Verification from "./view/user/Verification";
+import Register from "./view/user/Register";
+
+import AdminLayout from "./components/AdminLayout";
+
+
+import PageNotFound from "./view/PageNotFound";
+import CollegeList from "./view/admin/CollegeList";
+import UserList from "./view/admin/UserList";
+
+
+
 
 
 axios.defaults.baseURL = "http://localhost:8000/";
@@ -48,6 +56,7 @@ const router = createBrowserRouter([
             },
         ],
     },
+
     {
         path: "/",
         element: <GuestLayout />,
@@ -66,20 +75,30 @@ const router = createBrowserRouter([
             },
         ],
     },
+
     {
         path: "/",
         element: <AdminLayout />,
         children: [
             {
-                path: "/admin-dashboard",
-                element: <Dashboard />,
+                path: "/admin",
+                element: <User />,
             },
             {
-                path: "/admin",
-                element: <Profile />,
+                path: "/edit-user/:id",
+                element: <EditUser />,
+            },
+            {
+                path: "/view-college",
+                element: <CollegeList />,
+            },
+            {
+                path: "/view-user",
+                element: <UserList />,
             },
         ],
     },
+
     {
         path: "*",
         element: <PageNotFound />,

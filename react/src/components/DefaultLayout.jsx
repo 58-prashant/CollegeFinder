@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 import {  useEffect, useState } from "react";
-import './default.css';
+import '../assets/css/default.css';
 
 function DefaultLayout() {
     const navigate = useNavigate();

@@ -166,5 +166,20 @@ class AuthController extends Controller
             'code'=>$code
         ]);
     }
+
+    public function view(){
+        $users = User::all();
+        if($users){
+            return response()->json([
+                'status'=>200,
+                'users'=>$users,
+            ]);
+        }else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'User not found',
+            ]);
+        }
+    }
     
 }

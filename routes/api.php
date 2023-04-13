@@ -22,11 +22,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout',[AuthController::class,'logout']);
 });
+
 Route::post('register',[AuthController::class,'register']);
 Route::post('login',[AuthController::class,'login']);
 Route::post('user-profile',[AuthController::class,'user']);
 Route::get('user-edit/{id}',[AuthController::class,'editUser']);
 Route::post('update-user/{id}',[AuthController::class,'updateUser']);
-
 Route::get('verification',[AuthController::class,'verification']);
+
+Route::get('view-user',[AuthController::class,'view']);
+
 Route::get('home',[CollegeController::class,'show']);
+Route::get('view-college/{id}',[CollegeController::class,'edit']);

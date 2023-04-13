@@ -1,0 +1,30 @@
+.notfound{
+    background-image: url("404.jpg");
+    background-position: center;
+    height: 610px;
+    background-size: cover;
+    text-align: center;
+}
+.back{
+
+    position: absolute;
+    bottom: 50px;
+    left:45%;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    background-color: #F49F1C;
+    padding: 10px;
+    margin-top: 0px;
+    border-radius: 20px;
+    color:#023047 ;
+    font-weight: 700;
+}
+.back:hover{
+    text-decoration: underline;
+    background-color: #c87c0b;
+    cursor: pointer;
+    color:#fff ;
+    font-weight: 900;
+
+}

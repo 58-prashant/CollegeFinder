@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
-export function Verification() {
+ function Verification() {
     const location = useLocation();
     const [otp, setOtp] = useState([]);
     const [code, setCode] = useState([]);
@@ -53,3 +53,4 @@ export function Verification() {
         </div>
     );
 }
+export default Verification

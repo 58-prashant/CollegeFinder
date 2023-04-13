@@ -1,0 +1,12 @@
+.college-info-card{
+    font-weight: 600;
+    background-color: white;
+    margin-top: 100px;
+    margin-left: 350px;
+    margin-right: 300px;
+    align-content: center;
+    padding: 70px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.806)
+}

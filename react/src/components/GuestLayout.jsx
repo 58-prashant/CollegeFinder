@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useState } from "react";
 
-import './guestLayout.css';
+import '../assets/css/guestLayout.css';
 
 function GuestLayout() {
     

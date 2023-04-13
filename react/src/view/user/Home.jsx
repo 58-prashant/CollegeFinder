@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./home.css";
-import Loading from "./Loading";
+import "../../assets/css/home.css";
+import Loading from "../Loading";
 
 function Home() {
     const [data, setData] = useState([]);

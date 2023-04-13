@@ -32,7 +32,7 @@ function Login() {
                     } else {
                         localStorage.setItem("auth_token", res.data.token);
                         localStorage.setItem("ac_type", res.data.account);
-                        localStorage.setItem("auth_user", res.data.token);
+                        localStorage.setItem("auth_user", res.data.username);
                         localStorage.setItem("email", res.data.email);
                         swal("Success", "Logged In", "success");
                         console.log("admin");

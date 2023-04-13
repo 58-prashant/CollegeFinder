@@ -85,15 +85,36 @@ class CollegeController extends Controller
     public function show(college $college)
     {
         $data = $college->get();
-        return(['college'=>$data]);
+        if($data){
+            return response()->json([
+                'status'=>200,
+                'college'=>$data,
+            ]);
+        }else{
+        return response()-> json([
+            'status'=>404,
+            'message'=>'Data not found',
+        ]);
+        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(college $college)
+    public function edit($id)
     {
-        //
+        $data = college::find($id);
+        if($data){
+            return response()->json([
+                'status'=>200,
+                'college'=>$data,
+            ]);
+        }else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'Invalid Id',
+            ]);
+        }
     }
 
     /**
