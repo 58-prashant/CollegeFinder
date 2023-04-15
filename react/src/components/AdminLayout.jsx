@@ -50,7 +50,7 @@ function AdminLayout() {
         });
     };
     return (
-        <div id="defaultLayout">
+        <div id="layout">
             <aside>
                 <Link
                     className={location.pathname === "/" ? "active" : ""}

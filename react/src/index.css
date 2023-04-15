@@ -9,7 +9,7 @@
 html,
 body,
 #root,
-#defaultLayout,
+#layout,
 #guestLayout {
     min-height: 100vh;
 }
@@ -48,10 +48,11 @@ input:focus {
 }
 
 /* buttons */
-.btn{
+.btn { 
+    
     font-family: "Roboto", sans-serif;
     outline: 0;
-    background: #FFBF75;
+    background: #FFBF75 ;
     border: 0;
     border-radius: 10px;
     text-decoration: none;
@@ -83,10 +84,7 @@ header{
     text-align: center;
      align-content: center;
 }
-.userData .card{
-   
-    
-}
+
 .btn-logout {
     text-decoration: none;
     padding: 0.75rem 1.5rem;
@@ -142,11 +140,11 @@ header{
     margin-bottom: 1rem;
     margin-top: 0.5rem;
 }
-#defaultLayout {
+#layout {
     display: flex;
 }
 
-#defaultLayout aside {
+#layout aside {
     height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 160px; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
@@ -166,7 +164,7 @@ header{
 main{
     margin-left: 160px;
 }
-#defaultLayout aside > a {
+#layout aside > a {
     display: block;
     padding: 0.75rem 1rem;
     border-radius: 6px;
@@ -174,26 +172,26 @@ main{
     text-decoration: none;
     transition: all 0.2s;
 }
-#defaultLayout .user{
+#layout .user{
     text-decoration: none;
     font-weight: bold;
     margin-left: 250px;
     color: #023047;
 }
-#defaultLayout aside > a:hover {
+#layout aside > a:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
-#defaultLayout a.active{
+#layout a.active{
     background-color: #011018;
     font-weight: bold;
 
 }
 
-#defaultLayout .content {
+#layout .content {
     flex: 1;
 }
 
-#defaultLayout header {
+#layout header {
     height: 80px;
     padding: 2rem 3rem;
     width: 100%;
@@ -210,43 +208,8 @@ main{
     margin-top: 10px;
 }
 
-/*admin layout */
-#adminLayout {
-    display: flex;
-}
 
-#adminLayout aside {
-    width: 240px;
-    background-color: #023047;
-    padding: 1rem;
-}
-#adminLayout aside > a {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.2s;
-}
-#adminLayout aside > a:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-#adminLayout .content {
-    flex: 1;
-}
-#adminLayout header {
-    height: 80px;
-    padding: 2rem 3rem;
-    background-color: white;
-    width: 100%;
-    color: #000;
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
+/*Icons*/
 .bi{
     padding-right: 15px;
     margin-left: 10px;

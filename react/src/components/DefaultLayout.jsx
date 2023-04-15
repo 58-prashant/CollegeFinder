@@ -48,7 +48,7 @@ function DefaultLayout() {
         });
     };
     return (
-        <div id="defaultLayout">
+        <div id="layout">
             <aside>
                 <Link to="/">
                     <img className="logo" src="Logo.png" alt="Logo" />

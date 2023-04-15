@@ -181,5 +181,52 @@ class AuthController extends Controller
             ]);
         }
     }
+
+    public function createUser(Request $request){
+        $validator = Validator::make($request->all(),[
+        'name'=>'required',
+        'email'=>'required|email|max:191|unique:users,email',
+        'password' => [
+                        'required',
+                        'min:8',
+                        'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/'
+                        ],
+        'address'=>'required',
+        'image'=>'required',
+        'dob'=>'required',
+        'status'=>'required',
+       ]);
+        if($validator->fails()){
+            return response()->json([
+                'status'=>422,
+                'error'=>$validator->messages(),
+            ]);
+         }
+         else{
+            $user = new User;
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->password = Hash::make($request->input('password'));
+            $user->status = $request->input('status');
+            $user->dob = $request->input('dob');
+            $user->address = $request->input('address');
+            if($request->hasFile('image')){
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extension;
+                $file->move('uploads/user-profile/',$filename);
+                $user->profile_path = 'uploads/user-profile/'.$filename;
+                $user ->save();
+            return response()->json([
+                'status'=>200,
+                'message'=>'Created',
+            ]);
+            }else{
+                return "Images not found";
+            }
+                
+         }
+    }
+    
     
 }

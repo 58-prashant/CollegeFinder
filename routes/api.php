@@ -31,6 +31,7 @@ Route::post('update-user/{id}',[AuthController::class,'updateUser']);
 Route::get('verification',[AuthController::class,'verification']);
 
 Route::get('view-user',[AuthController::class,'view']);
+Route::post('create-user',[AuthController::class,'createUser']);
 
 Route::get('home',[CollegeController::class,'show']);
 Route::get('view-college/{id}',[CollegeController::class,'edit']);

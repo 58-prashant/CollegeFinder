@@ -18,6 +18,7 @@ import AdminLayout from "./components/AdminLayout";
 import PageNotFound from "./view/PageNotFound";
 import CollegeList from "./view/admin/CollegeList";
 import UserList from "./view/admin/UserList";
+import AddUser from "./view/admin/AddUser";
 
 
 
@@ -95,6 +96,10 @@ const router = createBrowserRouter([
             {
                 path: "/view-user",
                 element: <UserList />,
+            },
+            {
+                path: "/add-user",
+                element:<AddUser/>,
             },
         ],
     },
