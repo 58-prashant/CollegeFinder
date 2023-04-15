@@ -11,9 +11,12 @@ function CollegeList(){
       }
   });
   return (
-      <div>
-          <Link to="/add-college">Add College</Link>
-          <table>
+      <div id="userdata">
+        <h1 className="admin-formtitle">Colleges</h1>
+          <Link className="btn" to="/add-college">
+              Add College
+          </Link>
+          <table className="table">
               <thead>
                   <tr>
                       <th>Id</th>
@@ -33,8 +36,18 @@ function CollegeList(){
                           <td>{item.location}</td>
                           <td>{item.established_year}</td>
                           <td>
-                              <Link to={"/edit-user/" + item.id}>Edit</Link>
-                              <Link to={"/delete-user/" + item.id}>Delete</Link>
+                              <Link
+                                  className="btn-edit"
+                                  to={"/edit-user/" + item.id}
+                              >
+                                  Edit
+                              </Link>
+                              <Link
+                                  className="btn-delete"
+                                  to={"/delete-user/" + item.id}
+                              >
+                                  Delete
+                              </Link>
                           </td>
                       </tr>
                   ))}

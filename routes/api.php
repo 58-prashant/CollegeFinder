@@ -33,6 +33,7 @@ Route::get('verification',[AuthController::class,'verification']);
 Route::get('view-user',[AuthController::class,'view']);
 Route::post('create-user',[AuthController::class,'createUser']);
 Route::get('user-profile/{id}',[AuthController::class,'view_user']);
+Route::delete('delete-user/{id}',[AuthController::class,'delete_user']);
 
 Route::get('home',[CollegeController::class,'show']);
 Route::get('view-college/{id}',[CollegeController::class,'edit']);

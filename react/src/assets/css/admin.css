@@ -17,3 +17,63 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+#userdata .name{
+  text-decoration: none;
+  color:#023047 ;
+}
+#userdata .btn{
+  text-decoration: none;
+  background-color: #fd9400;
+  color:#022e44 ;
+  padding: 10px;
+}
+#userdata .btn-block{
+  
+ font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #FFBF75 ;
+    border: 0;
+    border-radius: 10px;
+    text-decoration: none;
+    padding: 15px;
+    color: #392727;
+    font-size: 16px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+    width: 100%;
+}
+#userdata .btn-block:hover{
+  background: #f8b568;
+}
+#userdata .table{
+ margin-top: 40px;
+}
+#userdata .admin-user-form{
+  margin-top: 20px;
+}
+#userdata .label{
+  color: #737373;
+}
+#userdata .btn-edit{
+  text-decoration: none;
+  background-color: rgb(2, 113, 2);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  
+  
+}
+#userdata a:hover{
+  text-decoration: underline;
+  
+}
+#userdata .btn-delete{
+  text-decoration: none;
+  background-color: rgb(120, 1, 1);
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 5px;
+  
+}

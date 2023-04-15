@@ -58,15 +58,16 @@ function AddUser() {
             });
     };
     return (
-        <div className="create-user">
+        <div id="userdata" className="create-user">
+            <h1 className="admin-formtitle">Create new User</h1>
+            <Link className="btn" to="/view-user">
+                View Users
+            </Link>
+
             <div className="admin-user-form">
                 <form onSubmit={onSubmit}>
-                    <h1 className="admin-formtitle">Create new User</h1>
-                    <Link to='/view-user'>
-                        View Users
-                    </Link>
-
                     <span className="error">{error.image}</span>
+                    <label className="label">Profile Image:</label>
                     <input
                         name="image"
                         id="pofile_pic"
@@ -74,24 +75,30 @@ function AddUser() {
                         onChange={handleImage}
                     />
                     <span className="error">{error.name}</span>
+                    <label className="label">Full name:</label>
                     <input ref={nameRef} type="name" placeholder="Full Name" />
                     <span className="error">{error.email}</span>
+                    <label className="label">Email:</label>
                     <input ref={emailRef} type="email" placeholder="Email" />
                     <span className="error">{error.password}</span>
+                    <label className="label">Password:</label>
                     <input
                         ref={passwordRef}
                         type="password"
                         placeholder="Password"
                     />
                     <span className="error">{error.address}</span>
+                    <label className="label">Address:</label>
                     <input ref={addressRef} type="text" placeholder="Address" />
                     <span className="error">{error.dob}</span>
+                    <label className="label">Birthdate:</label>
                     <input
                         ref={birthdateRef}
                         type="date"
                         placeholder="Birthdate"
                     />
                     <span className="error">{error.status}</span>
+                    <label className="label">Status:</label>
                     <input ref={statusRef} type="text" placeholder="Status" />
                     <button className="btn btn-block">Create</button>
                 </form>
