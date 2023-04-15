@@ -27,7 +27,7 @@ function AdminLayout() {
     useEffect(() => {
         setUser(localStorage.getItem("auth_user"));
         axios
-            .post("/api/user-profile", { email })
+            .post("/api/view-profile", { email })
             .then((res) => {
                 setData(res.data.user);
             })

@@ -19,6 +19,7 @@ import PageNotFound from "./view/PageNotFound";
 import CollegeList from "./view/admin/CollegeList";
 import UserList from "./view/admin/UserList";
 import AddUser from "./view/admin/AddUser";
+import UserProfile from "./view/admin/UserProfile";
 
 
 
@@ -99,7 +100,11 @@ const router = createBrowserRouter([
             },
             {
                 path: "/add-user",
-                element:<AddUser/>,
+                element: <AddUser />,
+            },
+            {
+                path: "/profile/:id",
+                element: <UserProfile />,
             },
         ],
     },

@@ -17,7 +17,6 @@ function AddUser() {
 
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
-        console.log(picture.image);
     };
    useEffect(() => {
        console.log(picture);
@@ -34,7 +33,7 @@ function AddUser() {
             
         };
         const formData = new FormData();
-        formData.append("image", picture.image);
+        formData.append('image', picture.image);
         formData.append("name", payload.name);
         formData.append("dob", payload.birthdate);
         formData.append("status", payload.status);
@@ -43,13 +42,20 @@ function AddUser() {
         formData.append("email", payload.email);
         console.log(Object.fromEntries(formData));
 
-        axios.post("/api/create-user", formData).then((res) => {
-            if (res.data.status === 200) {
-                swal("Success", res.data.message, "success");
-            } else {
-                setError(res.data.error);
-            }
-        });
+        axios
+            .post("/api/create-user", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            })
+            .then((res) => {
+                if (res.data.status === 200) {
+                    swal("Success", res.data.message, "success");
+                    navigate('/view-user');
+                } else {
+                    setError(res.data.error);
+                }
+            });
     };
     return (
         <div className="create-user">

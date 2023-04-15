@@ -1,21 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import '../../assets/css/editUser.css'
-function User() {
+import { Link, useParams } from "react-router-dom";
+import "../../assets/css/editUser.css";
+function UserProfile() {
     const [data, setData] = useState({});
+    const { id } = useParams();
 
     useEffect(() => {
-        const email = localStorage.getItem("email");
 
         axios
-            .post("/api/view-profile", { email })
+            .get("/api/user-profile/"+id)
             .then((res) => {
-                setData(res.data.user);
-            })
-            .catch((error) => {
-                console.log(error);
+                if(res.data.status === 200){
+                     setData(res.data.user);
+                }else{
+                    console.log(res.data.message);
+                }
+               
             });
+            
     }, []);
 
     return (
@@ -47,4 +50,4 @@ function User() {
     );
 }
 
-export default User;
+export default UserProfile;

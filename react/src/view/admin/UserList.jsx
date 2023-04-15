@@ -32,7 +32,7 @@ function UserList() {
                         <tr className="link" key={item.id}>
                             <td>{item.id}</td>
                             <td>
-                                <Link to={'/user/'+item.id}>{item.name}</Link>
+                                <Link to={'/profile/'+item.id}>{item.name}</Link>
                             </td>
                             {item.profile_path ? (
                                 <td>

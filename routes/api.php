@@ -25,13 +25,14 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
 Route::post('register',[AuthController::class,'register']);
 Route::post('login',[AuthController::class,'login']);
-Route::post('user-profile',[AuthController::class,'user']);
+Route::post('view-profile',[AuthController::class,'user']);
 Route::get('user-edit/{id}',[AuthController::class,'editUser']);
 Route::post('update-user/{id}',[AuthController::class,'updateUser']);
 Route::get('verification',[AuthController::class,'verification']);
 
 Route::get('view-user',[AuthController::class,'view']);
 Route::post('create-user',[AuthController::class,'createUser']);
+Route::get('user-profile/{id}',[AuthController::class,'view_user']);
 
 Route::get('home',[CollegeController::class,'show']);
 Route::get('view-college/{id}',[CollegeController::class,'edit']);
