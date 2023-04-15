@@ -62,6 +62,9 @@ function AddUser() {
             <div className="admin-user-form">
                 <form onSubmit={onSubmit}>
                     <h1 className="admin-formtitle">Create new User</h1>
+                    <Link to='/view-user'>
+                        View Users
+                    </Link>
 
                     <span className="error">{error.image}</span>
                     <input

@@ -53,7 +53,7 @@ function UserList() {
                             <td>{item.dob}</td>
                             <td>{item.status}</td>
                             <td>
-                                <Link to={"/edit-user/" + item.id}>Edit</Link>
+                                <Link to={"/user-edit/" + item.id}>Edit</Link>
                                 <Link to={"/delete-user/" + item.id}>
                                     Delete
                                 </Link>

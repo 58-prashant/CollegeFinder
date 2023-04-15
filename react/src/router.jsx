@@ -20,6 +20,8 @@ import CollegeList from "./view/admin/CollegeList";
 import UserList from "./view/admin/UserList";
 import AddUser from "./view/admin/AddUser";
 import UserProfile from "./view/admin/UserProfile";
+import Profile from "./view/admin/Profile";
+import UserEdit from "./view/admin/UserEdit";
 
 
 
@@ -84,11 +86,11 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/admin",
-                element: <User />,
+                element: < Profile/>,
             },
             {
-                path: "/edit-user/:id",
-                element: <EditUser />,
+                path: "/user-edit/:id",
+                element: <UserEdit />,
             },
             {
                 path: "/view-college",
