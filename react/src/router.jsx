@@ -22,6 +22,7 @@ import AddUser from "./view/admin/AddUser";
 import UserProfile from "./view/admin/UserProfile";
 import Profile from "./view/admin/Profile";
 import UserEdit from "./view/admin/UserEdit";
+import AddCollege from "./view/admin/AddCollege";
 
 
 
@@ -86,7 +87,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/admin",
-                element: < Profile/>,
+                element: <Profile />,
             },
             {
                 path: "/user-edit/:id",
@@ -107,6 +108,10 @@ const router = createBrowserRouter([
             {
                 path: "/profile/:id",
                 element: <UserProfile />,
+            },
+            {
+                path: "/add-college",
+                element: <AddCollege />,
             },
         ],
     },

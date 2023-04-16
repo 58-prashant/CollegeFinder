@@ -23,7 +23,7 @@ function UserProfile() {
 
     return (
         <div className="userinfo-card">
-            <Link className="btn-edit" to={"/edit-user/" + data.id}>
+            <Link className="btn-edit" to={"/user-edit/" + data.id}>
                 <i className="bi bi-pencil-fill"></i>
             </Link>
             <div>

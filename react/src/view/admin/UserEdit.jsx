@@ -7,14 +7,13 @@ import swal from "sweetalert";
 function UserEdit() {
     const [data, setData] = useState({
         name: "",
+        email:"",
         dob: "",
         location: "",
+        status:"",
+
     });
-    // const [inputData,setInputData]= useState({
-    //     name:"",
-    //     dob:"",
-    //     location:"",
-    // })
+
     const [error, setError] = useState([]);
     const [picture, setPicture] = useState([]);
     const { id } = useParams();
@@ -23,9 +22,6 @@ function UserEdit() {
     const handleData = (e) => {
         e.persist();
         setData({ ...data, [e.target.name]: e.target.value });
-        console.log([e.target.name]);
-        console.log(e.target.value);
-        console.log(data);
     };
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
@@ -50,11 +46,13 @@ function UserEdit() {
         const formData = new FormData();
         formData.append("image", picture.image);
         formData.append("name", data.name);
+        formData.append("email", data.email);
         formData.append("dob", data.dob);
         formData.append("address", data.address);
+        formData.append("status", data.status);
         console.log(Object.fromEntries(formData));
         axios
-            .post("/api/update-user/" + id, formData, {
+            .post("/api/user-edit/" + id, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -100,6 +98,15 @@ function UserEdit() {
                         onChange={handleData}
                         defaultValue={data.name}
                     />
+                    <label htmlFor="email">Enter Email:</label>
+                    <i className="error">{error.email}</i>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        onChange={handleData}
+                        defaultValue={data.email}
+                    />
 
                     <label htmlFor="dob">Choose Birthday:</label>
                     <i className="error">{error.dob}</i>
@@ -118,6 +125,15 @@ function UserEdit() {
                         type="text"
                         onChange={handleData}
                         defaultValue={data.address}
+                    />
+                    <label htmlFor="status">Enter Status:</label>
+                    <i className="error">{error.status}</i>
+                    <input
+                        id="status"
+                        name="status"
+                        type="text"
+                        onChange={handleData}
+                        defaultValue={data.status}
                     />
                     <button className="btn">Update</button>
                 </form>

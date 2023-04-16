@@ -255,5 +255,54 @@ class AuthController extends Controller
             ]);
         }
    }
-    
+    public function userEdit(Request $request, $id){
+        $validator = Validator::make($request ->all(),
+        [
+            'name'=>'required',
+            'email'=>'email|max:191',
+            'address'=>'required',
+            'dob' =>'required',
+            'status'=>'required',
+         ]);
+        
+         if($validator->fails()){
+            return response()->json([
+                'status'=>422,
+                'error'=>$validator->messages(),
+            ]);
+         }
+         else{
+            $user = User::find($id);
+            if($user){
+                $user->name = $request->input('name');
+                $user->dob = $request->input('dob');
+                $user->email = $request->input('email');
+                $user->address = $request->input('address');
+                $user->status = $request->input('status');
+                if($request->hasFile('image')){
+                    $path = $user->profile_path;
+                    if(File::exists($path)){
+                        File::delete($path);
+                    }
+                    $file = $request->file('image');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time().'.'.$extension;
+                    $file->move('uploads/user-profile/',$filename);
+                    $user->profile_path = 'uploads/user-profile/'.$filename;
+                }
+                $user ->update();
+                return response()->json([
+                    'status'=>200,
+                    'message'=>'Updated',
+                ]);
+
+            }else{
+                return response()->json([
+                     'status'=>404,
+                'message'=>'User Not found',
+                ]);
+               
+            }
+         }
+    }
 }
