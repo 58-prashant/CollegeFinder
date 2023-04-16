@@ -18,6 +18,7 @@ function AddUser() {
     const handleImage = (e) => {
         setPicture({ image: e.target.files[0] });
     };
+    
    useEffect(() => {
        console.log(picture);
    }, [picture]);

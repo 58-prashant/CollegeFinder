@@ -2,8 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\college;
+use App\Models\College;
+use App\Models\Course;
+use App\Models\Photo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\File; 
+
 
 class CollegeController extends Controller
 {
@@ -18,9 +26,55 @@ class CollegeController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $college = new College();
+        $college->name = $request->input('name');
+        $college->email = $request->input('email');
+        $college->password = Hash::make($request->input('password'));
+        $college->established_year = $request->input('established_year');
+        $college->location = $request->input('location');
+        $college->description = $request->input('description');
+        $college->number = $request->input('number');
+        if($request->hasFile('image')){
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extension;
+                $file->move('uploads/college-profile/',$filename);
+                $college->image = 'uploads/college-profile/'.$filename;
+                
+
+            }
+            $college ->save();
+                $collegeId = $college->id;
+
+        $courseData = $request->input('course');
+    $photosData = $request->file('photos');
+
+    // Store the course data
+    foreach ($courseData as $course) {
+        $newCourse = new Course();
+        $newCourse->college_id = $collegeId;
+        $newCourse->title = $course['title'];
+        $newCourse->module_description = $course['description'];
+        $newCourse->duration_in_months = $course['timePeriod'];
+        $newCourse->modules = $course['module'];
+        $newCourse->career = $course['career'];
+        $newCourse->save();
+    }
+
+    // Store the photos data
+    foreach ($photosData as $photo) {
+        $newPhoto = new Photo();
+        $newPhoto->college_id = $collegeId;
+        $newPhoto->filename = $photo->store('photos');
+        $newPhoto->save();
+    }
+
+    return response()->json([
+        'status'=>200,
+        'message' => 'Data stored successfully!']);
+
     }
 
     /**
