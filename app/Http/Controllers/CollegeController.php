@@ -81,13 +81,22 @@ class CollegeController extends Controller
     public function collegeDetail($id){
         $college = College::find($id);
         $course = $college->courses;
-        $image = $college->image;
+        $photos = Photo::where('college_id', $id)->get();
+
+        // Transform the photos into an array of objects with a filename property
+        $photosArray = $photos->map(function ($photo) {
+            return [
+                'filename' => $photo->filename,
+            ];
+        })->toArray();
+
+        
         if($college){
              return response()->json([
                 'status'=>200,
                 'college'=>$college,
                 'course'=>$course,
-                'image'=>$image,
+                'image'=>$photosArray,
             ]);
         }else{
             return response()->json([
@@ -102,13 +111,12 @@ class CollegeController extends Controller
         if($college){
             $college->name = $request->input('name');
             $college->email = $request->input('email');
-            $college->password = Hash::make($request->input('password'));
             $college->established_year = $request->input('established_year');
             $college->location = $request->input('location');
             $college->description = $request->input('description');
             $college->number = $request->input('number');
             if($request->hasFile('image')){
-                    $path = $user->profile_path;
+                    $path = $college->image;
                     if(File::exists($path)){
                         File::delete($path);
                     }
@@ -127,27 +135,37 @@ class CollegeController extends Controller
 
     // Store the course data
     foreach ($courseData as $course) {
-        $courseId = $course['id'];
-        $existingCourse = Course::where('college_id', $collegeId)->where('id', $courseId)->first();
-        if ($existingCourse) {
-            $existingCourse->title = $course['title'];
-            $existingCourse->module_description = $course['description'];
-            $existingCourse->duration_in_months = $course['timePeriod'];
-            $existingCourse->modules = $course['module'];
-            $existingCourse->career = $course['career'];
-            $existingCourse->save();
+        if (isset($course['id'])) {
+            $courseId = $course['id'];
+            $existingCourse = Course::where('college_id', $collegeId)->where('id', $courseId)->first();
+            if ($existingCourse) {
+                $existingCourse->title = $course['title'];
+                $existingCourse->module_description = $course['description'];
+                $existingCourse->duration_in_months = $course['timePeriod'];
+                $existingCourse->modules = $course['module'];
+                $existingCourse->career = $course['career'];
+                $existingCourse->save();
+            }
         }
     }
 
     // Store the photos data
      foreach ($photosData as $photo) {
-        $photoId = $photo['id'];
-        $existingPhoto = Photo::where('college_id', $collegeId)->where('id', $photoId)->first();
-        if ($existingPhoto) {
-            $existingPhoto->filename = $photo->store('photos');
-            $existingPhoto->save();
-        }
+    $photoName = $photo->getClientOriginalName();
+    $existingPhoto = Photo::where('filename', $photoName)->where('college_id', $collegeId)->first();
+
+    if ($existingPhoto) {
+        // Update the photo details
+        $existingPhoto->description = $request->input("photo_desc_{$existingPhoto->id}");
+        $existingPhoto->save();
+    } else {
+        // Create a new photo entry
+        $newPhoto = new Photo;
+        $newPhoto->college_id = $collegeId;
+        $newPhoto->filename = $photoName;
+        $newPhoto->save();
     }
+}
 
     return response()->json([
         'status'=>200,
