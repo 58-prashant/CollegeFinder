@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -77,6 +78,109 @@ class CollegeController extends Controller
 
     }
 
+    public function collegeDetail($id){
+        $college = College::find($id);
+        $course = $college->courses;
+        $image = $college->image;
+        if($college){
+             return response()->json([
+                'status'=>200,
+                'college'=>$college,
+                'course'=>$course,
+                'image'=>$image,
+            ]);
+        }else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'No user found'
+            ]);
+        }
+
+    }
+    public function collegeUpdate(Request $request,$id){
+        $college = College::find($id);
+        if($college){
+            $college->name = $request->input('name');
+            $college->email = $request->input('email');
+            $college->password = Hash::make($request->input('password'));
+            $college->established_year = $request->input('established_year');
+            $college->location = $request->input('location');
+            $college->description = $request->input('description');
+            $college->number = $request->input('number');
+            if($request->hasFile('image')){
+                    $path = $user->profile_path;
+                    if(File::exists($path)){
+                        File::delete($path);
+                    }
+                    $file = $request->file('image');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time().'.'.$extension;
+                    $file->move('uploads/college-profile/',$filename);
+                    $college->image = 'uploads/college-profile/'.$filename;
+                }
+        }
+            $college ->save();
+            $collegeId = $college->id;
+
+        $courseData = $request->input('course');
+        $photosData = $request->file('photos');
+
+    // Store the course data
+    foreach ($courseData as $course) {
+        $courseId = $course['id'];
+        $existingCourse = Course::where('college_id', $collegeId)->where('id', $courseId)->first();
+        if ($existingCourse) {
+            $existingCourse->title = $course['title'];
+            $existingCourse->module_description = $course['description'];
+            $existingCourse->duration_in_months = $course['timePeriod'];
+            $existingCourse->modules = $course['module'];
+            $existingCourse->career = $course['career'];
+            $existingCourse->save();
+        }
+    }
+
+    // Store the photos data
+     foreach ($photosData as $photo) {
+        $photoId = $photo['id'];
+        $existingPhoto = Photo::where('college_id', $collegeId)->where('id', $photoId)->first();
+        if ($existingPhoto) {
+            $existingPhoto->filename = $photo->store('photos');
+            $existingPhoto->save();
+        }
+    }
+
+    return response()->json([
+        'status'=>200,
+        'message' => 'Data stored successfully!']);
+
+    
+    }
+    public function collegeDelete($id){
+        $college = College::find($id);
+
+        // Delete all photos related to the college
+        $photos = Photo::where('college_id',$id)->get();
+        if($photos){
+            foreach ($photos as $photo) {
+                Storage::delete($photo->filename);
+                $photo->delete();
+            }
+        }
+        
+
+        // Delete all courses related to the college
+        $courses = $college->courses;
+        if($courses){
+            foreach ($courses as $course) {
+                $course->delete();
+            }
+        }
+
+        // Delete the college
+        $college->delete();  
+    }
+
+
     /**
      * Store a newly created resource in storage.
      */
@@ -99,37 +203,7 @@ class CollegeController extends Controller
         'phone_number' => 'required|string|max:255',
     ]);
      // Store the college data in the database
-    $college = new College;
-    $college->college_name = $request->input('college_name');
-    $college->established = $request->input('established');
-    $college->location = $request->input('location');
-    $college->description = $request->input('description');
-    $college->email = $request->input('email');
-    $college->phone_number = $request->input('phone_number');
-    $college->save();
-
-    // Store the courses data in the database
-    foreach ($request->input('courses') as $course_data) {
-        $course = new Course;
-        $course->title = $course_data['title'];
-        $course->description = $course_data['description'];
-        $course->time_period = $course_data['time_period'];
-        $course->subject = $course_data['subject'];
-        $course->career = $course_data['career'];
-        $college->courses()->save($course);
-    }
-     // Store the photos in the storage and database
-    if ($request->hasFile('photos')) {
-        foreach ($request->file('photos') as $photo) {
-            $path = $photo->store('public/photos');
-            $photo = new Photo;
-            $photo->path = $path;
-            $college->photos()->save($photo);
-        }
-    }
-
-    // Return a response
-    return response()->json(['message' => 'College data stored successfully.','status'=>200]);
+   
 
     }
 

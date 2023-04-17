@@ -36,6 +36,9 @@ Route::get('user-profile/{id}',[AuthController::class,'view_user']);
 Route::post('user-edit/{id}',[AuthController::class,'userEdit']);
 Route::delete('delete-user/{id}',[AuthController::class,'delete_user']);
 Route::post('create-college',[CollegeController::class,'create']);
+Route::get('college-detail/{id}',[CollegeController::class,'collegeDetail']);
+Route::post('college-update/{id}',[CollegeController::class,'collegeUpdate']);
+Route::delete('college-delete/{id}',[CollegeController::class,'collegeDelete']);
 
 Route::get('home',[CollegeController::class,'show']);
 Route::get('view-college/{id}',[CollegeController::class,'edit']);

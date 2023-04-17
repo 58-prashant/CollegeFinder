@@ -1,18 +1,34 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function CollegeList(){
   const [data, setData] = useState([]);
+  useEffect(() => {
+      fetchData();
+  }, []);
+  const deleteHandler = ($id) => {
+      axios.delete("/api/college-delete/" + $id).then((res) => {
+          if (res.data.status === 200) {
+              swal("Success", res.data.message, "success");
+          } else {
+              console.log(res.data.message);
+          }
+      });
+      fetchData();
+  };
+
+  const fetchData=()=>{
   axios.get("/api/home").then((res) => {
       if (res.data.status == 200) {
           setData(res.data.college);
           console.log(data)
       }
   });
+}
   return (
       <div id="userdata">
-        <h1 className="admin-formtitle">Colleges</h1>
+          <h1 className="admin-formtitle">Colleges</h1>
           <Link className="btn" to="/add-college">
               Add College
           </Link>
@@ -38,13 +54,13 @@ function CollegeList(){
                           <td>
                               <Link
                                   className="btn-edit"
-                                  to={"/edit-user/" + item.id}
+                                  to={"/college-edit/" + item.id}
                               >
                                   Edit
                               </Link>
                               <Link
                                   className="btn-delete"
-                                  to={"/delete-user/" + item.id}
+                                  onClick={()=>deleteHandler(item.id)}
                               >
                                   Delete
                               </Link>

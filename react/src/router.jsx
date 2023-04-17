@@ -23,6 +23,7 @@ import UserProfile from "./view/admin/UserProfile";
 import Profile from "./view/admin/Profile";
 import UserEdit from "./view/admin/UserEdit";
 import AddCollege from "./view/admin/AddCollege";
+import CollegeEdit from "./view/admin/CollegeEdit";
 
 
 
@@ -112,6 +113,10 @@ const router = createBrowserRouter([
             {
                 path: "/add-college",
                 element: <AddCollege />,
+            },
+            {
+                path: "/college-edit/:id",
+                element: <CollegeEdit />,
             },
         ],
     },
