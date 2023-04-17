@@ -63,14 +63,17 @@ class CollegeController extends Controller
         $newCourse->career = $course['career'];
         $newCourse->save();
     }
-
-    // Store the photos data
-    foreach ($photosData as $photo) {
-        $newPhoto = new Photo();
-        $newPhoto->college_id = $collegeId;
-        $newPhoto->filename = $photo->store('photos');
-        $newPhoto->save();
-    }
+if($photoData){     
+        // Store the photos data
+        foreach ($photosData as $photo) {
+            $newPhoto = new Photo();
+            $fname= $photo->getClientOriginalExtension();
+            $photo->move('uploads/college-photo/',$fname);
+            $newPhoto->filename = 'uploads/college-photo/'.$fname;
+            $newPhoto->college_id = $collegeId;
+            $newPhoto->save();
+        }
+     }
 
     return response()->json([
         'status'=>200,
@@ -148,25 +151,30 @@ class CollegeController extends Controller
             }
         }
     }
-
-    // Store the photos data
-     foreach ($photosData as $photo) {
-    $photoName = $photo->getClientOriginalName();
-    $existingPhoto = Photo::where('filename', $photoName)->where('college_id', $collegeId)->first();
-
-    if ($existingPhoto) {
-        // Update the photo details
-        $existingPhoto->description = $request->input("photo_desc_{$existingPhoto->id}");
-        $existingPhoto->save();
-    } else {
-        // Create a new photo entry
-        $newPhoto = new Photo;
-        $newPhoto->college_id = $collegeId;
-        $newPhoto->filename = $photoName;
-        $newPhoto->save();
+if($photosData){     
+        // Store the photos data
+        foreach ($photosData as $photo){
+        $photoName = $photo->getClientOriginalName();
+        $photo->move('uploads/college-photo/',$photoName);
+        
+        $existingPhoto = Photo::where('filename', $photoName)->where('college_id', $collegeId)->first(); {
+            if ($existingPhoto) {
+                // Update the photo details
+                $existingPhoto->filename = 'uploads/college-photo/'.$photoName;
+                // $request->input("photo_desc_{$existingPhoto->id}");
+                $existingPhoto->save();
+            } else {
+            // Create a new photo entry
+                $newPhoto = new Photo;
+                $newPhoto->filename = 'uploads/college-photo/'.$photoName;
+                $newPhoto->college_id = $collegeId;
+                $newPhoto->save();
+            }
+           
+        }
+     }
+    
     }
-}
-
     return response()->json([
         'status'=>200,
         'message' => 'Data stored successfully!']);

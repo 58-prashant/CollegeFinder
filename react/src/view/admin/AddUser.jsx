@@ -10,6 +10,7 @@ function AddUser() {
     const addressRef = useRef();
     const birthdateRef = useRef();
     const statusRef = useRef();
+    const numberRef= useRef();
 
     const navigate = useNavigate();
     const [error, setError] = useState([]);
@@ -31,6 +32,7 @@ function AddUser() {
             address: addressRef.current.value,
             birthdate: birthdateRef.current.value,
             status: statusRef.current.value,
+            number: numberRef.current.value,
             
         };
         const formData = new FormData();
@@ -41,6 +43,7 @@ function AddUser() {
         formData.append("address", payload.address);
         formData.append("password", payload.password);
         formData.append("email", payload.email);
+        formData.append("number",payload.number);
         console.log(Object.fromEntries(formData));
 
         axios
@@ -101,6 +104,8 @@ function AddUser() {
                     <span className="error">{error.status}</span>
                     <label className="label">Status:</label>
                     <input ref={statusRef} type="text" placeholder="Status" />
+                    <label className="label">Number:</label>
+                    <input ref={numberRef} type="text" placeholder="Number" />
                     <button className="btn btn-block">Create</button>
                 </form>
             </div>

@@ -104,7 +104,7 @@ function AddCollege() {
             });
     };
     return (
-        <div className="container-fluid px-4">
+        <div id="userdata" className="container-fluid px-4">
             <div>
                 <div className="card-header">
                     <h1>Add College</h1>
@@ -348,7 +348,7 @@ function AddCollege() {
                                 </div>
                             ))}
                             <button
-                                className="btn"
+                                className="btn-edit"
                                 type="button"
                                 onClick={handleAddCourse}
                             >
@@ -373,7 +373,7 @@ function AddCollege() {
                             />
                         </div>
                     </div>
-                    <button>Create College</button>
+                    <button className="btn">Create College</button>
                 </form>
             </div>
         </div>

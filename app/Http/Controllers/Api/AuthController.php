@@ -195,6 +195,7 @@ class AuthController extends Controller
         'image'=>'required',
         'dob'=>'required',
         'status'=>'required',
+    'number'=>'required|min:10|',
        ]);
         if($validator->fails()){
             return response()->json([
@@ -210,6 +211,7 @@ class AuthController extends Controller
             $user->status = $request->input('status');
             $user->dob = $request->input('dob');
             $user->address = $request->input('address');
+            $user->number = $request->input('number');
             if($request->hasFile('image')){
                 $file = $request->file('image');
                 $extension = $file->getClientOriginalExtension();

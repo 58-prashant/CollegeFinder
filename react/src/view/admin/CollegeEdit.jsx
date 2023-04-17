@@ -404,8 +404,11 @@ function CollegeEdit() {
                             {photos &&
                                 photos.map((photo, index) => (
                                     <img
-                                        key={index}
-                                        src={photo.filename}
+                                        style={{ width: 100 }}
+                                        src={
+                                            "http://localhost:8000/" +
+                                            photo.filename
+                                        }
                                         alt={`Photo ${index}`}
                                     />
                                 ))}
