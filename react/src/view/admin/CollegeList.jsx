@@ -47,7 +47,11 @@ function CollegeList(){
                   {data.map((item) => (
                       <tr className="link" key={item.id}>
                           <td>{item.id}</td>
-                          <td>{item.name}</td>
+                          <td>
+                              <Link className="name" to={"/college-profile/" + item.id}>
+                                  {item.name}
+                              </Link>
+                          </td>
                           <td>{item.email}</td>
                           <td>{item.location}</td>
                           <td>{item.established_year}</td>
@@ -60,7 +64,7 @@ function CollegeList(){
                               </Link>
                               <Link
                                   className="btn-delete"
-                                  onClick={()=>deleteHandler(item.id)}
+                                  onClick={() => deleteHandler(item.id)}
                               >
                                   Delete
                               </Link>

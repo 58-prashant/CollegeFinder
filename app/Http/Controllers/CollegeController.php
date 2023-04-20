@@ -63,7 +63,7 @@ class CollegeController extends Controller
         $newCourse->career = $course['career'];
         $newCourse->save();
     }
-if($photoData){     
+if($photosData){     
         // Store the photos data
         foreach ($photosData as $photo) {
             $newPhoto = new Photo();
