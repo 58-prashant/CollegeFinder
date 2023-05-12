@@ -11,6 +11,8 @@ import GuestLayout from "./components/GuestLayout";
 import Login from "./view/user/Login";
 import Verification from "./view/user/Verification";
 import Register from "./view/user/Register";
+import Guest from "./view/guest/Guest";
+
 
 import AdminLayout from "./components/AdminLayout";
 
@@ -25,6 +27,7 @@ import UserEdit from "./view/admin/UserEdit";
 import AddCollege from "./view/admin/AddCollege";
 import CollegeEdit from "./view/admin/CollegeEdit";
 import CollegeProfile from "./view/admin/CollegeProfile";
+
 
 
 
@@ -68,6 +71,10 @@ const router = createBrowserRouter([
         path: "/",
         element: <GuestLayout />,
         children: [
+            {
+                path:"/home",
+                element:<Guest/>,
+            },
             {
                 path: "/login",
                 element: <Login />,

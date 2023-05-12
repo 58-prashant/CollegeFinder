@@ -2,7 +2,9 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "client": "npm run dev --prefix react",
+    "app": "concurrently \"php artisan serve \" \" npm run client\""
     },
     "devDependencies": {
         "axios": "^1.1.2",

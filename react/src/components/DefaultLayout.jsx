@@ -20,7 +20,7 @@ function DefaultLayout() {
         return <Navigate to="/admin" />;
     }
     if (!localStorage.getItem("auth_token")) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/home" />;
     }
     useEffect(()=>{
         setUser(localStorage.getItem("auth_user"));
