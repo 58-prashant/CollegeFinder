@@ -9,6 +9,7 @@ import axios from "axios";
 import {  useEffect, useState } from "react";
 import '../assets/css/default.css';
 
+
 function DefaultLayout() {
     const navigate = useNavigate();
     const [user,setUser] = useState("");
@@ -16,12 +17,12 @@ function DefaultLayout() {
     const location = useLocation();
     const type = localStorage.getItem("ac_type");
     const email = localStorage.getItem("email");
-    if (type != 0) {
-        return <Navigate to="/admin" />;
-    }
-    if (!localStorage.getItem("auth_token")) {
-        return <Navigate to="/home" />;
-    }
+    // if (type != 0) {
+    //     return <Navigate to="/admin" />;
+    // }
+    // if (!localStorage.getItem("auth_token")) {
+    //     return <Navigate to="/home" />;
+    // }
     useEffect(()=>{
         setUser(localStorage.getItem("auth_user"));
         axios

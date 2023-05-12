@@ -1,16 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../../assets/css/home.css";
+import "../../assets/css/guest.css";
 import Loading from "../Loading";
 
 function Guest() {
     const [data, setData] = useState([]);
-    const [loading,setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         axios.get("/api/home").then((res) => {
-            
             setData(res.data.college);
             console.log(data);
         });
@@ -20,27 +19,33 @@ function Guest() {
         console.log(data);
     }, [data]);
 
-    if(loading){
+    if (loading) {
         return (
             <div>
                 <h1>Loading....</h1>
             </div>
         );
-    }else{
+    } else {
         return (
             <div>
                 <nav className="navigation-bar">
                     <div>
-                        <Link to="/">
+                        <Link to="/home">
                             <img className="logo" src="Logo.png" alt="Logo" />
                         </Link>
-                        <h2>Sikshya Khoji</h2>
                     </div>
                     <div>
                         <Link to="/login">Login</Link>
                     </div>
                 </nav>
-                <body>
+                <aside>
+                    <div>
+                        <label>Search</label>
+                        <input type="text" />
+                        <button className="search-btn">search</button>
+                    </div>
+                </aside>
+                <main className="main">
                     <div className="header">
                         {data.map((item) => (
                             <Link
@@ -50,6 +55,15 @@ function Guest() {
                             >
                                 <div className="card" key={item.id}>
                                     <div className="college">
+                                        <div>
+                                            <img
+                                                style={{ width: 100 }}
+                                                src={
+                                                    "http://localhost:8000/" +
+                                                    item.image
+                                                }
+                                            />
+                                        </div>
                                         <div>
                                             <h2>{item.name}</h2>
                                         </div>
@@ -72,7 +86,7 @@ function Guest() {
                             </Link>
                         ))}
                     </div>
-                </body>
+                </main>
             </div>
         );
     }

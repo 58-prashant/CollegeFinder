@@ -72,10 +72,6 @@ const router = createBrowserRouter([
         element: <GuestLayout />,
         children: [
             {
-                path:"/home",
-                element:<Guest/>,
-            },
-            {
                 path: "/login",
                 element: <Login />,
             },
@@ -136,6 +132,10 @@ const router = createBrowserRouter([
     {
         path: "*",
         element: <PageNotFound />,
+    },
+    {
+        path: "/home",
+        element: <Guest />,
     },
 ]);
 export default router;
