@@ -27,7 +27,7 @@ function Guest() {
         );
     } else {
         return (
-            <div>
+            <div id="guest">
                 <nav className="navigation-bar">
                     <div>
                         <Link to="/home">

@@ -27,6 +27,7 @@ import UserEdit from "./view/admin/UserEdit";
 import AddCollege from "./view/admin/AddCollege";
 import CollegeEdit from "./view/admin/CollegeEdit";
 import CollegeProfile from "./view/admin/CollegeProfile";
+import College_Login from "./view/college/college_Login";
 
 
 
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
             {
                 path: "/otp-verification",
                 element: <Verification />,
+            },
+            {
+                path:"college-login",
+                element:<College_Login/>
             },
         ],
     },

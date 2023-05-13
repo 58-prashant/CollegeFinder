@@ -16,7 +16,7 @@
     transition: all 0.3 ease;
     cursor: pointer;
 }
-nav{
+#guest nav{
     margin-top: 0px;
      height: 80px;
     padding: 2rem 3rem;
@@ -37,8 +37,8 @@ nav{
     padding-top: 10px;
     width: 100px;
 }
-body
-aside {
+
+#guest aside {
     margin-top: 80px;
 height: 80%; /* Full-height: remove this if you want "auto" height */
   width: 200px; /* Set the width of the sidebar */
@@ -56,7 +56,7 @@ height: 80%; /* Full-height: remove this if you want "auto" height */
     height: 100%;
     z-index: 1;
 }
-aside > a {
+#guest aside > a {
     display: block;
     padding: 0.75rem 1rem;
     border-radius: 6px;
@@ -64,10 +64,10 @@ aside > a {
     text-decoration: none;
     transition: all 0.2s;
 }
- aside > a:hover {
+#guest aside > a:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
-a.active{
+#guest a.active{
     background-color: #011018;
     font-weight: bold;
 

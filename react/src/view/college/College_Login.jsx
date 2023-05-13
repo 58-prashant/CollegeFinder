@@ -3,42 +3,50 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 
-function Register() {
-    const nameRef = useRef();
+function College_Login() {
     const emailRef = useRef();
     const passwordRef = useRef();
-    const addressRef = useRef();
-
     const [error, setError] = useState([]);
     const navigate = useNavigate();
 
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
 
         const payload = {
-            name: nameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            address: addressRef.current.value,
         };
-        console.log(payload);
+
         axios.get("/sanctum/csrf-cookie").then((response) => {
-            axios.post("/api/register", payload).then((res) => {
+            axios.post("/api/login", payload).then((res) => {
                 if (res.data.status === 200) {
-                    navigate("/otp-verification", {
-                        state: {
-                            token: res.data.token,
-                            user: res.data.username,
-                            status: res.data.account,
-                            email: res.data.email,
-                        },
-                    });
+                    if (res.data.account != 1) {
+                        navigate("/otp-verification", {
+                            state: {
+                                token: res.data.token,
+                                user: res.data.username,
+                                status: res.data.account,
+                                email:res.data.email,
+                            },
+                        });
+                    } else {
+                        localStorage.setItem("auth_token", res.data.token);
+                        localStorage.setItem("ac_type", res.data.account);
+                        localStorage.setItem("auth_user", res.data.username);
+                        localStorage.setItem("email", res.data.email);
+                        swal("Success", "Logged In", "success");
+                        console.log("admin");
+                        navigate("/");
+                    }
+                } else if (res.data.status === 401) {
+                    swal("Warning", res.data.message, "warning");
                 } else {
                     setError(res.data.validation_errors);
                 }
             });
         });
     };
+
     return (
         <div className="login-signup-form animated fadeInDown">
             <div className="form">
@@ -50,10 +58,8 @@ function Register() {
                             <h1 className="sikshya">Sikhya Khoji</h1>
                         </div>
                     </div>
-                    <h1 className=" title">Register Page</h1>
+                    <h1 className="title">Student Login Page</h1>
 
-                    <span className="error">{error.name}</span>
-                    <input ref={nameRef} type="name" placeholder="Full Name" />
                     <span className="error">{error.email}</span>
                     <input ref={emailRef} type="email" placeholder="Email" />
                     <span className="error">{error.password}</span>
@@ -62,16 +68,18 @@ function Register() {
                         type="password"
                         placeholder="Password"
                     />
-                    <span className="error">{error.address}</span>
-                    <input ref={addressRef} type="text" placeholder="Address" />
-                    <button className="btn btn-block">Register</button>
-                    
+                    <Link className="forget" to="/">
+                        Forget password?
+                    </Link>
+                    <button className="btn btn-block">Login</button>
+                    <Link to="/college-login">Login as Student</Link>
                     <p className="message">
-                        Already Registered? <Link to="/login">Sign In</Link>
+                        Not Registered?{" "}
+                        <Link to="/register">Create an account</Link>
                     </p>
                 </form>
             </div>
         </div>
     );
 }
-export default Register;
+export default College_Login;

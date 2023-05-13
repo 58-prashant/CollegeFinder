@@ -17,12 +17,12 @@ function DefaultLayout() {
     const location = useLocation();
     const type = localStorage.getItem("ac_type");
     const email = localStorage.getItem("email");
-    // if (type != 0) {
-    //     return <Navigate to="/admin" />;
-    // }
-    // if (!localStorage.getItem("auth_token")) {
-    //     return <Navigate to="/home" />;
-    // }
+    if (type != 0) {
+        return <Navigate to="/admin" />;
+    }
+    if (!localStorage.getItem("auth_token")) {
+        return <Navigate to="/home" />;
+    }
     useEffect(()=>{
         setUser(localStorage.getItem("auth_user"));
         axios
@@ -44,7 +44,7 @@ function DefaultLayout() {
                 localStorage.removeItem("ac_type");
                 localStorage.removeItem("email");
                 swal("Success", res.data.message, "success");
-                navigate("/login");
+                navigate("/home");
             }
         });
     };

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import swal from "sweetalert";
 
-function Register() {
+function College_Register() {
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -74,4 +74,4 @@ function Register() {
         </div>
     );
 }
-export default Register;
+export default College_Register;

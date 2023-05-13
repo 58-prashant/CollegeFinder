@@ -58,7 +58,7 @@ function Login() {
                             <h1 className="sikshya">Sikhya Khoji</h1>
                         </div>
                     </div>
-                    <h1 className="title">Login Page</h1>
+                    <h1 className="title">Student Login Page</h1>
 
                     <span className="error">{error.email}</span>
                     <input ref={emailRef} type="email" placeholder="Email" />
@@ -71,7 +71,8 @@ function Login() {
                     <Link className="forget" to="/">
                         Forget password?
                     </Link>
-                  <button className="btn btn-block">Login</button>
+                    <button className="btn btn-block">Login</button>
+                    <Link to="/college-login">Login as College</Link>
                     <p className="message">
                         Not Registered?{" "}
                         <Link to="/register">Create an account</Link>
