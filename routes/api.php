@@ -43,3 +43,4 @@ Route::post('college-update/{id}',[CollegeController::class,'collegeUpdate']);
 Route::delete('college-delete/{id}',[CollegeController::class,'collegeDelete']);
 
 Route::post('college-login',[CollegeController::class,'login']);
+Route::post('college-register',[CollegeController::class,'register']);

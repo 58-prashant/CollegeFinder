@@ -23,16 +23,14 @@ function College_Register() {
         };
         console.log(payload);
         axios.get("/sanctum/csrf-cookie").then((response) => {
-            axios.post("/api/register", payload).then((res) => {
+            axios.post("/api/college-register", payload).then((res) => {
                 if (res.data.status === 200) {
-                    navigate("/otp-verification", {
-                        state: {
-                            token: res.data.token,
-                            user: res.data.username,
-                            status: res.data.account,
-                            email: res.data.email,
-                        },
-                    });
+                   localStorage.setItem("auth_token", location.state.token);
+                   localStorage.setItem("auth_user", location.state.user);
+                   localStorage.setItem("ac_type", location.state.status);
+                   localStorage.setItem("email", location.state.email);
+                   swal("Success", "Registered", "success");
+                   navigate("/");
                 } else {
                     setError(res.data.validation_errors);
                 }
@@ -53,7 +51,7 @@ function College_Register() {
                     <h1 className=" title">Register Page</h1>
 
                     <span className="error">{error.name}</span>
-                    <input ref={nameRef} type="name" placeholder="Full Name" />
+                    <input ref={nameRef} type="name" placeholder=" Name" />
                     <span className="error">{error.email}</span>
                     <input ref={emailRef} type="email" placeholder="Email" />
                     <span className="error">{error.password}</span>
@@ -67,7 +65,7 @@ function College_Register() {
                     <button className="btn btn-block">Register</button>
                     
                     <p className="message">
-                        Already Registered? <Link to="/login">Sign In</Link>
+                        Already Registered? <Link to="/college-login">Sign In</Link>
                     </p>
                 </form>
             </div>

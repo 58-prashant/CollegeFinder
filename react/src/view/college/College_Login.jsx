@@ -58,14 +58,11 @@ function College_Login() {
                         type="password"
                         placeholder="Password"
                     />
-                    <Link className="forget" to="/">
-                        Forget password?
-                    </Link>
                     <button className="btn btn-block">Login</button>
                     <Link to="/college-login">Login as Student</Link>
                     <p className="message">
                         Not Registered?{" "}
-                        <Link to="/register">Create an account</Link>
+                        <Link to="/college-register">Create an account</Link>
                     </p>
                 </form>
             </div>

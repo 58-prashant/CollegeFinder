@@ -54,6 +54,43 @@ class CollegeController extends Controller
             }
         }
     }
+    public function register(Request $request) 
+    {
+       $validator = Validator::make($request->all(),[
+        'name'=>'required',
+        'email'=>'required|email|max:191|unique:users,email',
+        'password' => [
+                        'required',
+                        'min:8',
+                        'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/'
+                        ],
+        'address'=>'required',
+       ]);
+       if ($validator->fails()){
+        return response()->json([
+            'validation_errors'=>$validator->messages(),
+        ]);
+       }else{
+        $user = User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+            'address'=>$request->address,
+            'status' => 2,
+        ]);
+         $token = $user->createToken($user->email.'_Token')->plainTextToken;
+         return response()->json([
+            'status'=>200,
+            'username'=>$user->name,
+            'token'=>$token,
+             'account'=>$user->status,
+             'email'=>$user->email,
+            'message'=>'Registered successfully!'
+        ]);
+       }
+
+        
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -109,6 +146,14 @@ if($photosData){
     return response()->json([
         'status'=>200,
         'message' => 'Data stored successfully!']);
+
+    }
+    public function logout(){
+        auth()->user()->tokens()->delete();
+        return response()->json([
+            "status"=>200,
+            "message"=>'Logged out Successfully',
+        ]);
 
     }
 

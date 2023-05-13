@@ -28,6 +28,8 @@ import AddCollege from "./view/admin/AddCollege";
 import CollegeEdit from "./view/admin/CollegeEdit";
 import CollegeProfile from "./view/admin/CollegeProfile";
 import College_Login from "./view/college/college_Login";
+import College_Register from "./view/college/college_Register";
+import CollegeLayout from "./components/CollegeLayout";
 
 
 
@@ -67,7 +69,12 @@ const router = createBrowserRouter([
             },
         ],
     },
-
+    // {
+    //     path:"/",
+    //     element:<CollegeLayout/>,
+    //     children
+           
+    // },
     {
         path: "/",
         element: <GuestLayout />,
@@ -88,6 +95,10 @@ const router = createBrowserRouter([
                 path:"college-login",
                 element:<College_Login/>
             },
+            {
+                path:"college-register",
+                element:<College_Register/>
+            }
         ],
     },
 
