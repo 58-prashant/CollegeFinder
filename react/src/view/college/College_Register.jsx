@@ -7,7 +7,7 @@ function College_Register() {
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
-    const addressRef = useRef();
+    const locationRef = useRef();
 
     const [error, setError] = useState([]);
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ function College_Register() {
             name: nameRef.current.value,
             email: emailRef.current.value,
             password: passwordRef.current.value,
-            address: addressRef.current.value,
+            location: locationRef.current.value,
         };
         console.log(payload);
         axios.get("/sanctum/csrf-cookie").then((response) => {
@@ -30,7 +30,7 @@ function College_Register() {
                    localStorage.setItem("ac_type", location.state.status);
                    localStorage.setItem("email", location.state.email);
                    swal("Success", "Registered", "success");
-                   navigate("/");
+                   navigate("/college-profile");
                 } else {
                     setError(res.data.validation_errors);
                 }
@@ -60,8 +60,8 @@ function College_Register() {
                         type="password"
                         placeholder="Password"
                     />
-                    <span className="error">{error.address}</span>
-                    <input ref={addressRef} type="text" placeholder="Address" />
+                    <span className="error">{error.location}</span>
+                    <input ref={locationRef} type="text" placeholder="location" />
                     <button className="btn btn-block">Register</button>
                     
                     <p className="message">

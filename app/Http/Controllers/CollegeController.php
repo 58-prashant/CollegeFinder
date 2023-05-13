@@ -23,6 +23,8 @@ class CollegeController extends Controller
     {
         //
     }
+
+    //COLLEGE LOGIN
     public function login(Request $request){
         $validator = Validator::make($request->all(),[
             'email'=>'required|max:191|email',
@@ -34,7 +36,7 @@ class CollegeController extends Controller
         ]);  
         }else{
 
-            $user = User::where('email',$request->email)->first();
+            $user = College::where('email',$request->email)->first();
             if(! $user || ! Hash::check($request->password,$user->password)){
                 return response()->json([
                     'status'=>401,
@@ -54,28 +56,30 @@ class CollegeController extends Controller
             }
         }
     }
+
+    //COLLEG REGISTER
     public function register(Request $request) 
     {
        $validator = Validator::make($request->all(),[
-        'name'=>'required',
-        'email'=>'required|email|max:191|unique:users,email',
+        'name'=>'required|unique:colleges,name',
+        'email'=>'required|email|max:191|unique:colleges,email',
         'password' => [
                         'required',
                         'min:8',
                         'regex:/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/'
                         ],
-        'address'=>'required',
+        'location'=>'required',
        ]);
        if ($validator->fails()){
         return response()->json([
             'validation_errors'=>$validator->messages(),
         ]);
        }else{
-        $user = User::create([
+        $user = College::create([
             'name'=>$request->name,
             'email'=>$request->email,
             'password'=>Hash::make($request->password),
-            'address'=>$request->address,
+            'location'=>$request->location,
             'status' => 2,
         ]);
          $token = $user->createToken($user->email.'_Token')->plainTextToken;
@@ -105,6 +109,7 @@ class CollegeController extends Controller
         $college->location = $request->input('location');
         $college->description = $request->input('description');
         $college->number = $request->input('number');
+        $college->status = 2;
         if($request->hasFile('image')){
                 $file = $request->file('image');
                 $extension = $file->getClientOriginalExtension();
@@ -148,6 +153,8 @@ if($photosData){
         'message' => 'Data stored successfully!']);
 
     }
+
+    //COLLEGE LOGOUT
     public function logout(){
         auth()->user()->tokens()->delete();
         return response()->json([
@@ -157,6 +164,7 @@ if($photosData){
 
     }
 
+    //SHOW COLLEGE DETAIL
     public function collegeDetail($id){
         $college = College::find($id);
         $course = $college->courses;
@@ -185,6 +193,8 @@ if($photosData){
         }
 
     }
+
+    //UPDATE COLLEGE DETAILS
     public function collegeUpdate(Request $request,$id){
         $college = College::find($id);
         if($college){
@@ -225,6 +235,16 @@ if($photosData){
                 $existingCourse->career = $course['career'];
                 $existingCourse->save();
             }
+        }else{
+        $newCourse = new Course();
+        $newCourse->college_id = $collegeId;
+        $newCourse->title = $course['title'];
+        $newCourse->module_description = $course['description'];
+        $newCourse->duration_in_months = $course['timePeriod'];
+        $newCourse->modules = $course['module'];
+        $newCourse->career = $course['career'];
+        $newCourse->save();
+    
         }
     }
 if($photosData){     
@@ -257,6 +277,8 @@ if($photosData){
 
     
     }
+
+    //DELETE COLLEGE
     public function collegeDelete($id){
         $college = College::find($id);
 
@@ -283,31 +305,7 @@ if($photosData){
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-        'college_name' => 'required|string|max:255',
-        'established' => 'required|date',
-        'location' => 'required|string|max:255',
-        'description' => 'required|string',
-        'courses' => 'required|array',
-        'courses.*.title' => 'required|string|max:255',
-        'courses.*.description' => 'required|string',
-        'courses.*.time_period' => 'required|string|max:255',
-        'courses.*.subject' => 'required|string|max:255',
-        'courses.*.career' => 'required|string|max:255',
-        'photos' => 'nullable|array',
-        'photos.*' => 'nullable|image|max:2048',
-        'email' => 'required|email',
-        'phone_number' => 'required|string|max:255',
-    ]);
-     // Store the college data in the database
-   
-
-    }
+    
 
     /**
      * Display the specified resource.

@@ -6,9 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
 use App\Models\Photo;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
 
 class college extends Model
 {
+    use HasApiTokens, HasFactory, Notifiable;
     protected $fillable =[
         'name',
         'image',
@@ -18,6 +23,7 @@ class college extends Model
         'location',
         'description',
         'number',
+        'status',
     ];
     /**
      * The attributes that should be hidden for serialization.

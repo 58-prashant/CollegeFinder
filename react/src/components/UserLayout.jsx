@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import {
     Link,
     Navigate,
@@ -7,24 +5,25 @@ import {
     useLocation,
     useNavigate,
 } from "react-router-dom";
-import "../assets/css/admin.css";
+import axios from "axios";
+import {  useEffect, useState } from "react";
+import '../assets/css/default.css';
 
-function AdminLayout() {
+
+function UserLayout() {
     const navigate = useNavigate();
+    const [user,setUser] = useState("");
+    const[data,setData] = useState([]);
     const location = useLocation();
     const type = localStorage.getItem("ac_type");
     const email = localStorage.getItem("email");
-    const [user, setUser] = useState("");
-    const [data, setData] = useState([]);
-
-    // if (type != 1) {
-    //     return <Navigate to="/" />;
+    // if (type != 0) {
+    //     return <Navigate to="/admin" />;
     // }
     // if (!localStorage.getItem("auth_token")) {
-    //     return <Navigate to="/login" />;
+    //     return <Navigate to="/" />;
     // }
-
-    useEffect(() => {
+    useEffect(()=>{
         setUser(localStorage.getItem("auth_user"));
         axios
             .post("/api/view-profile", { email })
@@ -34,16 +33,16 @@ function AdminLayout() {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
-
+    },[])
+    
     const onLogout = (e) => {
         e.preventDefault();
         axios.post("/api/logout").then((res) => {
             if (res.data.status === 200) {
                 localStorage.removeItem("auth_token");
                 localStorage.removeItem("auth_user");
-                localStorage.removeItem("email");
                 localStorage.removeItem("ac_type");
+                localStorage.removeItem("email");
                 swal("Success", res.data.message, "success");
                 navigate("/home");
             }
@@ -52,46 +51,35 @@ function AdminLayout() {
     return (
         <div id="layout">
             <aside>
+                <Link to="/">
+                    <img className="logo" src="Logo.png" alt="Logo" />
+                </Link>
+
                 <Link
                     className={location.pathname === "/" ? "active" : ""}
                     to="/"
                 >
-                    <img className="logo" src="Logo.svg" alt="Logo" />
+                    <i className="bi bi-house-door-fill"></i>Home
                 </Link>
-                <h1 className="sidetitle">Admin Panel</h1>
-
                 <Link
-                    className={location.pathname === "/admin" ? "active" : ""}
+                    className={location.pathname === "/user" ? "active" : ""}
                     to="/user"
                 >
-                    <span className="bi bi-person-circle"></span>
-                    Profile
+                    <span className="bi bi-person-circle"></span>Profile
                 </Link>
                 <Link
                     className={
-                        location.pathname === "/admin-dashboard" ? "active" : ""
+                        location.pathname === "/bookmark" ? "active" : ""
                     }
-                    to="/admin-dashboard"
+                    to="/bookmark"
                 >
-                    <span className="bi bi-speedometer"></span>
-                    Dashboard
+                    <span className="bi bi-bookmarks-fill"></span>Bookmark
                 </Link>
                 <Link
-                    className={
-                        location.pathname === "/view-user" ? "active" : ""
-                    }
-                    to="/view-user"
+                    className={location.pathname === "/search" ? "active" : ""}
+                    to="/search"
                 >
-                    <i className="bi bi-people"></i> Users
-                </Link>
-                <Link
-                    className={
-                        location.pathname === "/view-college" ? "active" : ""
-                    }
-                    to="/view-college"
-                >
-                    <i className="fa fa-university"></i>
-                    Colleges
+                    <span className="bi bi-search"></span>Search
                 </Link>
             </aside>
             <div className="content">
@@ -100,14 +88,14 @@ function AdminLayout() {
                         <div>
                             {data.profile_path ? (
                                 <div className="border">
-                                    <img
-                                        className="pp"
-                                        src={
-                                            "http://localhost:8000/" +
-                                            data.profile_path
-                                        }
-                                        // alt="profile picture"
-                                    />
+                                <img
+                                    className="pp"
+                                    src={
+                                        "http://localhost:8000/" +
+                                        data.profile_path
+                                    }
+                                    // alt="profile picture"
+                                />
                                 </div>
                             ) : (
                                 <span className="bi bi-person-circle"></span>
@@ -122,7 +110,6 @@ function AdminLayout() {
                         </a>
                     </div>
                 </header>
-
                 <main>
                     <Outlet />
                 </main>
@@ -130,4 +117,4 @@ function AdminLayout() {
         </div>
     );
 }
-export default AdminLayout;
+export default UserLayout;

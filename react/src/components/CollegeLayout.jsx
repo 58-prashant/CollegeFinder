@@ -1,6 +1,12 @@
-import { Outlet } from "react-router-dom"
+import { Link, Outlet } from "react-router-dom"
 
 function CollegeLayout(){
+    // if (type != 2) {
+    //     return <Navigate to="/" />;
+    // }
+    // if (!localStorage.getItem("auth_token")) {
+    //     return <Navigate to="/login" />;
+    // }
      const onLogout = (e) => {
          e.preventDefault();
          axios.post("/api/college-logout").then((res) => {

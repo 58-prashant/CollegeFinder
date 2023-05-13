@@ -1,7 +1,7 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import axios from "axios";
 
-import DefaultLayout from "./components/DefaultLayout";
+import UserLayout from "./components/UserLayout";
 import Home from "./view/user/Home";
 import User from "./view/user/User";
 import EditUser from "./view/user/EditUser";
@@ -11,12 +11,12 @@ import GuestLayout from "./components/GuestLayout";
 import Login from "./view/user/Login";
 import Verification from "./view/user/Verification";
 import Register from "./view/user/Register";
+
+
 import Guest from "./view/guest/Guest";
 
 
 import AdminLayout from "./components/AdminLayout";
-
-
 import PageNotFound from "./view/PageNotFound";
 import CollegeList from "./view/admin/CollegeList";
 import UserList from "./view/admin/UserList";
@@ -29,7 +29,10 @@ import CollegeEdit from "./view/admin/CollegeEdit";
 import CollegeProfile from "./view/admin/CollegeProfile";
 import College_Login from "./view/college/college_Login";
 import College_Register from "./view/college/college_Register";
+
 import CollegeLayout from "./components/CollegeLayout";
+import DefaultLayout from "./components/DefaultLayout";
+import College_profile from "./view/college/college_profile";
 
 
 
@@ -49,7 +52,7 @@ axios.interceptors.request.use(function (config) {
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <DefaultLayout />,
+        element: <UserLayout />,
         children: [
             {
                 path: "/",
@@ -69,12 +72,31 @@ const router = createBrowserRouter([
             },
         ],
     },
-    // {
-    //     path:"/",
-    //     element:<CollegeLayout/>,
-    //     children
-           
-    // },
+    {
+        path:"/",
+        element:<CollegeLayout/>,
+        children:[
+            {
+                path:"/college-profile",
+                element:<College_profile/>
+            },
+        ]
+
+    },
+    {
+        path: "/",
+        element: <DefaultLayout />,
+        children: [
+            {
+                path: "/home",
+                element: <Guest />,
+            },
+            {
+                path: "/view-college/:id",
+                element: <ViewCollege />,
+            },
+        ],
+    },
     {
         path: "/",
         element: <GuestLayout />,
@@ -92,13 +114,13 @@ const router = createBrowserRouter([
                 element: <Verification />,
             },
             {
-                path:"college-login",
-                element:<College_Login/>
+                path: "college-login",
+                element: <College_Login />,
             },
             {
-                path:"college-register",
-                element:<College_Register/>
-            }
+                path: "college-register",
+                element: <College_Register />,
+            },
         ],
     },
 
@@ -148,10 +170,6 @@ const router = createBrowserRouter([
     {
         path: "*",
         element: <PageNotFound />,
-    },
-    {
-        path: "/home",
-        element: <Guest />,
     },
 ]);
 export default router;

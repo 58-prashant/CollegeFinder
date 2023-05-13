@@ -5,9 +5,9 @@ import '../assets/css/guestLayout.css';
 
 function GuestLayout() {
     
-    if (localStorage.getItem('auth_token')) {
-        return <Navigate to="/" />;
-    }
+    // if (localStorage.getItem('auth_token')) {
+    //     return <Navigate to="/" />;
+    // }
     return (
         <div className="body-image" >
             <Outlet />
