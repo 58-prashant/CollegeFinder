@@ -29,6 +29,8 @@ Route::post('view-profile',[AuthController::class,'user']);
 Route::get('user-edit/{id}',[AuthController::class,'editUser']);
 Route::post('update-user/{id}',[AuthController::class,'updateUser']);
 Route::get('verification',[AuthController::class,'verification']);
+Route::get('home',[CollegeController::class,'show']);
+Route::get('view-college/{id}',[CollegeController::class,'edit']);
 
 Route::get('view-user',[AuthController::class,'view']);
 Route::post('create-user',[AuthController::class,'createUser']);
@@ -40,5 +42,4 @@ Route::get('college-detail/{id}',[CollegeController::class,'collegeDetail']);
 Route::post('college-update/{id}',[CollegeController::class,'collegeUpdate']);
 Route::delete('college-delete/{id}',[CollegeController::class,'collegeDelete']);
 
-Route::get('home',[CollegeController::class,'show']);
-Route::get('view-college/{id}',[CollegeController::class,'edit']);
+Route::post('college-login',[CollegeController::class,'login']);

@@ -18,26 +18,16 @@ function College_Login() {
         };
 
         axios.get("/sanctum/csrf-cookie").then((response) => {
-            axios.post("/api/login", payload).then((res) => {
+            axios.post("/api/college-login", payload).then((res) => {
                 if (res.data.status === 200) {
-                    if (res.data.account != 1) {
-                        navigate("/otp-verification", {
-                            state: {
-                                token: res.data.token,
-                                user: res.data.username,
-                                status: res.data.account,
-                                email:res.data.email,
-                            },
-                        });
-                    } else {
+                    
                         localStorage.setItem("auth_token", res.data.token);
                         localStorage.setItem("ac_type", res.data.account);
                         localStorage.setItem("auth_user", res.data.username);
                         localStorage.setItem("email", res.data.email);
                         swal("Success", "Logged In", "success");
-                        console.log("admin");
-                        navigate("/");
-                    }
+                        navigate("/collge");
+                    
                 } else if (res.data.status === 401) {
                     swal("Warning", res.data.message, "warning");
                 } else {
