@@ -4,39 +4,80 @@ namespace App\Http\Controllers;
 use App\Models\Bookmark;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class BookmarkController extends Controller
 {
-     public function store(Request $request)
+    public function getBookmarksByCollegeId(Request $request)
+{
+    try {
+        $collegeId = $request->query('college_id');
+
+        // Retrieve bookmarks by college_id
+        $bookmarks = Bookmark::where('college_id', $collegeId)->get();
+
+        return response()->json(['bookmarks' => $bookmarks], 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Internal server error'], 500);
+    }
+}
+    public function index($id)
+    {
+        // $userId = $request->query('user_id');
+        $bookmarks = Bookmark::with('college')->where('user_id', $id)->get();
+
+        return response()->json([
+            'status' => 200,
+            'bookmarks' => $bookmarks,
+        ]);
+    }
+    
+     public function createBookmark($id)
     {
         // Check if the user is authenticated
     
-        $validatedData = $request->validate([
-            'college_id' => 'required|exists:colleges,id',
-            'user_id' => 'required|exists:users,id',
-        ]);
+        try{
+        $collegeId = $id;
+        $userId = $request->input('user_id');
 
-        $bookmark = Bookmark::create([
-            'user_id' => $validatedData['user_id'],
-            'college_id' => $validatedData['college_id'],
-        ]);
+         $existingBookmark = Bookmark::where('college_id', $collegeId)
+            ->where('user_id', $userId)
+            ->first();
+             if ($existingBookmark) {
+            return response()->json(['message' => 'Bookmark already exists'], 400);
+        }
+
+        // Create a new bookmark
+        $bookmark = new Bookmark();
+        $bookmark->college_id = $collegeId;
+        $bookmark->user_id = $userId;
+        $bookmark->save();
 
         return response()->json([
-            'status' => 200,
-            'message' => 'Bookmark created successfully!',
             'bookmark' => $bookmark,
-        ]);
+            'status' => 200]);
+    
+        }
+        catch (\Exception $e) {
+        return response()->json(['message' => 'Internal server error'], 500);
+    }
     }
 
-    public function destroy($id)
+    public function deleteBookmark($id)
     {
-        $bookmark = Bookmark::findOrFail($id);
-        $this->authorize('delete', $bookmark);
+       try {
+        // Find the bookmark by ID
+        $bookmark = Bookmark::find($id);
+
+        if (!$bookmark) {
+            return response()->json(['message' => 'Bookmark not found'], 404);
+        }
+
+        // Delete the bookmark
         $bookmark->delete();
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Bookmark deleted successfully!',
-        ]);
+        return response()->json(['message' => 'Bookmark deleted successfully'], 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Internal server error'], 500);
+    }
     }
 }

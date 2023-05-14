@@ -38,8 +38,12 @@ Route::get('view-college/{id}',[CollegeController::class,'edit']);
 Route::get('/search', [CollegeController::class,'search']);
 
 
-Route::post('/bookmarks', [BookmarkController::class, 'store']);
-Route::delete('/bookmarks/{id}', [BookmarkController::class, 'destroy']);
+Route::post('bookmarks', [BookmarkController::class, 'createBookmark']);
+Route::delete('bookmarks/{id}', [BookmarkController::class, 'deleteBookmark']);
+Route::get('view-bookmarks/{id}', [BookmarkController::class, 'index']);
+Route::get('bookmarks/{id}', [BookmarkController::class, 'getBookmarksByCollegeId']);
+
+
 
 
 Route::get('view-user',[AuthController::class,'view']);

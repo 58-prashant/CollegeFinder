@@ -56,9 +56,9 @@ function ViewCollege() {
         const checkBookmark = async () => {
             try {
                 const response = await axios.get(
-                    `/api/bookmarks?college_id=${id}`
+                    `/api/bookmarks/`+id
                 );
-                if (response.data.status === 200 && response.data.bookmark) {
+                if (response.data.status === 200) {
                     setBookmarked(true);
                     setBookmarkId(response.data.bookmark.id);
                 }
