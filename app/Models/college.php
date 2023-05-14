@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 
-class college extends Model
+class College extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
     protected $fillable =[
@@ -38,7 +38,7 @@ class college extends Model
         return $this->hasMany(Course::class);
     }
     public function image(){
-        return $this-hasMany(Photo::class);
+        return $this->hasMany(Photo::class);
     }
     use HasFactory;
 }

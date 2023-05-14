@@ -37,7 +37,7 @@ function ViewCollege() {
             career: "",
         },
     ]);
-
+   
     const [photos, setPhotos] = useState([]);
 
     return (

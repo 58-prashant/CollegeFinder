@@ -33,6 +33,7 @@ import College_Register from "./view/college/college_Register";
 import CollegeLayout from "./components/CollegeLayout";
 import DefaultLayout from "./components/DefaultLayout";
 import College_profile from "./view/college/college_profile";
+import SearchCollege from "./view/user/SearchCollege";
 
 
 
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
             {
                 path: "/view-college/:id",
                 element: <ViewCollege />,
+            },
+            {
+                path:"/search",
+                element:<SearchCollege/>,
             },
         ],
     },

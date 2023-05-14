@@ -224,7 +224,7 @@ if($photosData){
 
         $courseData = $request->input('course');
         $photosData = $request->file('photos');
-
+    
     // Store the course data
     foreach ($courseData as $course) {
         if (isset($course['id'])) {
@@ -279,6 +279,21 @@ if($photosData){
         'message' => 'Data stored successfully!']);
 
     
+    }
+
+    //SEARCH COLLEGE
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $colleges = College::where('name', 'like', '%' . $query . '%')
+            ->orWhere('location', 'like', '%' . $query . '%')
+            ->orWhereHas('courses', function ($courseQuery) use ($query) {
+                $courseQuery->where('title', 'like', '%' . $query . '%');
+            })
+            ->get();
+
+        return response()->json($colleges);
     }
 
     //DELETE COLLEGE
