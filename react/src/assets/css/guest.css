@@ -4,17 +4,8 @@
   margin-top: 30px;
   height: 1500px; /* Used in this example to enable scrolling */
 }
-.search-btn{
-    background-color: #FFBF75;
-    padding: 5px;
-     outline: 0;
-    border-radius: 5px;
-    color: #392727;
-    font-size: 16px;
-    text-decoration: none;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer;
+#guest .search{
+    margin-top: 40px;
 }
 #guest nav{
     z-index: 1;
@@ -34,43 +25,18 @@
     
 
 }
+#guest a{
+    color: #fff;
+    text-decoration: none;
+    padding-right: 10px;
+}
+#guest nav a:hover{
+    color: #3700ff;
+    text-decoration: underline;
+    font-weight: bold;
+}
 .logo{
     padding-top: 10px;
     width: 100px;
 }
 
-#guest aside {
-    z-index: 2;
-    margin-top: 80px;
-height: 80%; /* Full-height: remove this if you want "auto" height */
-  width: 200px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  background-color: #111; /* Black */
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-    width: 240px;
-    background-color: #e3e3e3;
-    padding: 1rem;
-    position: fixed;
-    height: 100%;
-    z-index: 1;
-}
-#guest aside > a {
-    display: block;
-    padding: 0.75rem 1rem;
-    border-radius: 6px;
-    color: white;
-    text-decoration: none;
-    transition: all 0.2s;
-}
-#guest aside > a:hover {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-#guest a.active{
-    background-color: #011018;
-    font-weight: bold;
-
-}

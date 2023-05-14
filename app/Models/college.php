@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Course;
 use App\Models\Photo;
+use App\Models\Bookmark;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -40,5 +41,9 @@ class College extends Model
     public function image(){
         return $this->hasMany(Photo::class);
     }
-    use HasFactory;
+    public function bookmarks(): HasMany
+{
+    return $this->hasMany(Bookmark::class);
+}
+    
 }

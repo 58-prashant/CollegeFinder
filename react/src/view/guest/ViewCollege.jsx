@@ -40,60 +40,6 @@ function ViewCollege() {
    
     const [photos, setPhotos] = useState([]);
 
-    //For bookmark
-    const [bookmarked, setBookmarked] = useState(false);
-    const [bookmarkId, setBookmarkId] = useState(null);
-    const[userId, setUserId] = useState(null);
-
-    useEffect(()=>{
-        const storedUserId = localStorage.getItem("id");
-        if(storedUserId){
-            setUserId(storedUserId);
-        }
-    },[])
-    useEffect(() => {
-        // Check if the college is bookmarked by the user
-        const checkBookmark = async () => {
-            try {
-                const response = await axios.get(
-                    `/api/bookmarks?college_id=${id}`
-                );
-                if (response.data.status === 200 && response.data.bookmark) {
-                    setBookmarked(true);
-                    setBookmarkId(response.data.bookmark.id);
-                }
-            } catch (error) {
-                console.error("Error:", error);
-            }
-        };
-        checkBookmark();
-    }, [id]);
-
-    const handleBookmark = async () => {
-        try {
-            const response = await axios.post("/api/bookmarks", {
-                college_id: id,
-                user_id: userId,
-            });
-            setBookmarked(true);
-            setBookmarkId(response.data.bookmark.id);
-            // Handle success or update UI accordingly
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
-
-    const handleUnbookmark = async () => {
-        try {
-            const response = await axios.delete(`/api/bookmarks/${bookmarkId}`);
-            setBookmarked(false);
-            setBookmarkId(null);
-            // Handle success or update UI accordingly
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
-
     return (
         <div id="userdata" className="container-fluid px-4">
             <div className="card-header">
@@ -106,16 +52,7 @@ function ViewCollege() {
                 />
 
                 <div>
-                    <h1>{data.name}</h1>{" "}
-                    {bookmarked ? (
-                        <button onClick={handleUnbookmark}>
-                            <i className="bi bi-bookmark-fill"></i>
-                        </button>
-                    ) : (
-                        <button onClick={handleBookmark}>
-                            <i className="bi bi-bookmark"></i>
-                        </button>
-                    )}
+                    <h1>{data.name}</h1>
                     <div>
                         <i className="bi bi-calendar-event"></i>
                         {data.established_year}

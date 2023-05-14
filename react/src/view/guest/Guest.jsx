@@ -32,7 +32,7 @@ function Guest() {
                         <Link
                             className="link"
                             key={item.id}
-                            to={"/view-college/" + item.id}
+                            to={"/viewCollege/" + item.id}
                         >
                             <div className="card" key={item.id}>
                                 <div className="college">

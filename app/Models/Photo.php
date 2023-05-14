@@ -12,5 +12,6 @@ class Photo extends Model
     public function college(){
         return $this->belongsTo(College::class);
     }
+    
     use HasFactory;
 }

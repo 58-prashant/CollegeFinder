@@ -34,6 +34,7 @@ import CollegeLayout from "./components/CollegeLayout";
 import DefaultLayout from "./components/DefaultLayout";
 import College_profile from "./view/college/college_profile";
 import SearchCollege from "./view/user/SearchCollege";
+import SearchBar from "./view/guest/SearchBar";
 
 
 
@@ -97,9 +98,13 @@ const router = createBrowserRouter([
                 element: <Guest />,
             },
             {
-                path: "/view-college/:id",
+                path: "/viewCollege/:id",
                 element: <ViewCollege />,
             },
+            {
+                path:"/guest-search",
+                element:<SearchBar/>
+            }
         ],
     },
     {

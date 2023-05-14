@@ -45,6 +45,7 @@ class AuthController extends Controller
             'token'=>$token,
              'account'=>$user->status,
              'email'=>$user->email,
+             'id'=>$user->id,
             'message'=>'Registered successfully!'
         ]);
        }
@@ -78,6 +79,7 @@ class AuthController extends Controller
                     'token'=>$token,
                      'account'=>$user->status,
                      'email'=>$user->email,
+                     'id'=>$user->id,
                     'message'=>'Logged In successfully!'
                 ]);
             }

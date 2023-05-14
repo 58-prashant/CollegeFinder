@@ -26,6 +26,7 @@ import swal from "sweetalert";
             localStorage.setItem("auth_user", location.state.user);
             localStorage.setItem("ac_type", location.state.status);
             localStorage.setItem("email", location.state.email);
+            localStorage.setItem("id",location.state.id);
             swal("Success", "OTP Matched", "success");
             navigate("/");
         } else {

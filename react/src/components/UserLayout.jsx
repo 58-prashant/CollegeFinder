@@ -43,6 +43,7 @@ function UserLayout() {
                 localStorage.removeItem("auth_user");
                 localStorage.removeItem("ac_type");
                 localStorage.removeItem("email");
+                localStorage.removeItem("id");
                 swal("Success", res.data.message, "success");
                 navigate("/home");
             }

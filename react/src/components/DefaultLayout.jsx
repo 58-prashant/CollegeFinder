@@ -6,24 +6,25 @@ function DefaultLayout(){
         return <Navigate to="/" />;
     }
  return (
-     <div id="guest" >
+     <div id="guest">
          <nav className="navigation-bar">
              <div>
                  <Link to="/home">
                      <img className="logo" src="Logo.png" alt="Logo" />
                  </Link>
              </div>
+             <div></div>
              <div>
+                 <Link
+                     className={location.pathname === "/search" ? "active" : ""}
+                     to="/guest-search"
+                 >
+                     <span className="bi bi-search"></span>Search
+                 </Link>
                  <Link to="/login">Login</Link>
              </div>
          </nav>
-         <aside>
-             <div>
-                 <label>Search</label>
-                 <input type="text" />
-                 <button className="search-btn">search</button>
-             </div>
-         </aside>
+         
          <main className="main">
              <Outlet />
          </main>

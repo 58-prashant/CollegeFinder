@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CollegeController;
+use App\Http\Controllers\BookmarkController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,10 @@ Route::get('verification',[AuthController::class,'verification']);
 Route::get('home',[CollegeController::class,'show']);
 Route::get('view-college/{id}',[CollegeController::class,'edit']);
 Route::get('/search', [CollegeController::class,'search']);
+
+
+Route::post('/bookmarks', [BookmarkController::class, 'store']);
+Route::delete('/bookmarks/{id}', [BookmarkController::class, 'destroy']);
 
 
 Route::get('view-user',[AuthController::class,'view']);

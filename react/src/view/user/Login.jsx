@@ -27,6 +27,7 @@ function Login() {
                                 user: res.data.username,
                                 status: res.data.account,
                                 email:res.data.email,
+                                id:res.data.id,
                             },
                         });
                     } else {
