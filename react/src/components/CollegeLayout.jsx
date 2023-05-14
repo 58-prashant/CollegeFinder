@@ -1,12 +1,16 @@
-import { Link, Outlet } from "react-router-dom"
+import { Link, Navigate, Outlet, useNavigate } from "react-router-dom";
+import "../assets/css/collegelayout.css";
+import axios from "axios";
 
 function CollegeLayout(){
-    // if (type != 2) {
-    //     return <Navigate to="/" />;
-    // }
-    // if (!localStorage.getItem("auth_token")) {
-    //     return <Navigate to="/login" />;
-    // }
+    const type = localStorage.getItem("ac_type");
+    const navigate = useNavigate();
+    if (type != 2) {
+        return <Navigate to="/" />;
+    }
+    if (!localStorage.getItem("auth_token")) {
+        return <Navigate to="/login" />;
+    }
      const onLogout = (e) => {
          e.preventDefault();
          axios.post("/api/college-logout").then((res) => {
@@ -15,14 +19,15 @@ function CollegeLayout(){
                  localStorage.removeItem("auth_user");
                  localStorage.removeItem("ac_type");
                  localStorage.removeItem("email");
+                 localStorage.removeItem("id");
                  swal("Success", res.data.message, "success");
                  navigate("/home");
              }
          });
      };
 return (
-    <div>
-        <nav className="navigation-bar">
+    <div id="college">
+        <header className="navigation-bar">
             <div>
                 <Link to="/home">
                     <img className="logo" src="Logo.png" alt="Logo" />
@@ -33,10 +38,12 @@ return (
                     Logout
                 </a>
             </div>
-        </nav>
-        <main>
-            <Outlet />
-        </main>
+        </header>
+        <div>
+            <main>
+                <Outlet />
+            </main>
+        </div>
     </div>
 );
 }

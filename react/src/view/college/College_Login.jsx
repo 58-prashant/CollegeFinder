@@ -25,8 +25,9 @@ function College_Login() {
                         localStorage.setItem("ac_type", res.data.account);
                         localStorage.setItem("auth_user", res.data.username);
                         localStorage.setItem("email", res.data.email);
+                        localStorage.setItem("id", res.data.id);
                         swal("Success", "Logged In", "success");
-                        navigate("/collge");
+                        navigate("/college-profile");
                     
                 } else if (res.data.status === 401) {
                     swal("Warning", res.data.message, "warning");

@@ -222,7 +222,7 @@ function CollegeEdit() {
                                 <input
                                     type="text"
                                     className="form-control"
-                                    name="establish"
+                                    name="established_year"
                                     defaultValue={data.established_year}
                                     onChange={handleData}
                                     placeholder="Enter Established Year"
@@ -271,6 +271,7 @@ function CollegeEdit() {
                         >
                             {course.map((course, index) => (
                                 <div key={index}>
+                                    <h3>Course {index+1}:</h3>
                                     <div className="form-group mb-3">
                                         <label>
                                             Title:
@@ -300,13 +301,11 @@ function CollegeEdit() {
                                                 id={`course-description-${index}`}
                                                 placeholder="Description"
                                                 name={`course-description-${index}`}
-                                                defaultValue={
-                                                    course.module_description
-                                                }
+                                                defaultValue={ course.module_description }
                                                 onChange={(e) =>
                                                     handleCourseChange(
                                                         index,
-                                                        "description",
+                                                        "module_description",
                                                         e.target.value
                                                     )
                                                 }
@@ -329,7 +328,7 @@ function CollegeEdit() {
                                                 onChange={(e) =>
                                                     handleCourseChange(
                                                         index,
-                                                        "timePeriod",
+                                                        "duration_in_months",
                                                         e.target.value
                                                     )
                                                 }
@@ -349,7 +348,7 @@ function CollegeEdit() {
                                             onChange={(e) =>
                                                 handleCourseChange(
                                                     index,
-                                                    "module",
+                                                    "modules",
                                                     e.target.value
                                                 )
                                             }

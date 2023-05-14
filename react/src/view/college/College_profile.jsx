@@ -12,7 +12,7 @@ function College_profile() {
         number: "",
     });
 
-    const { id } = useParams();
+    const id = localStorage.getItem("id");
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,7 +23,7 @@ function College_profile() {
                 setPhotos(res.data.image);
             } else if (res.data.status === 404) {
                 swal("Error", res.data.message, "error");
-                navigate("/user");
+               
             }
         });
     }, []);

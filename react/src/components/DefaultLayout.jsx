@@ -2,9 +2,9 @@ import { Link, Navigate, Outlet } from "react-router-dom";
 import "../assets/css/guest.css";
 
 function DefaultLayout(){
-    // if (localStorage.getItem("auth_token")) {
-    //     return <Navigate to="/" />;
-    // }
+    if (localStorage.getItem("auth_token")) {
+        return <Navigate to="/" />;
+    }
  return (
      <div id="guest" >
          <nav className="navigation-bar">

@@ -51,6 +51,7 @@ class CollegeController extends Controller
                     'token'=>$token,
                      'account'=>$user->status,
                      'email'=>$user->email,
+                     'id'=> $user->id,
                     'message'=>'Logged In successfully!'
                 ]);
             }
@@ -89,6 +90,7 @@ class CollegeController extends Controller
             'token'=>$token,
              'account'=>$user->status,
              'email'=>$user->email,
+             'id'=> $user->id,
             'message'=>'Registered successfully!'
         ]);
        }
@@ -96,6 +98,15 @@ class CollegeController extends Controller
         
     }
 
+    //COLLEGE LOGOUT
+    public function logout(){
+        auth()->user()->tokens()->delete();
+        return response()->json([
+            "status"=>200,
+            "message"=>'Logged out Successfully',
+        ]);
+
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -154,15 +165,7 @@ if($photosData){
 
     }
 
-    //COLLEGE LOGOUT
-    public function logout(){
-        auth()->user()->tokens()->delete();
-        return response()->json([
-            "status"=>200,
-            "message"=>'Logged out Successfully',
-        ]);
-
-    }
+    
 
     //SHOW COLLEGE DETAIL
     public function collegeDetail($id){

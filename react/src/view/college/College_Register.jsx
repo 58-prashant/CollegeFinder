@@ -29,6 +29,7 @@ function College_Register() {
                    localStorage.setItem("auth_user", location.state.user);
                    localStorage.setItem("ac_type", location.state.status);
                    localStorage.setItem("email", location.state.email);
+                   localStorage.setItem("id", location.state.id);
                    swal("Success", "Registered", "success");
                    navigate("/college-profile");
                 } else {
