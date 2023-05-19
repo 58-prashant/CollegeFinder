@@ -17,12 +17,12 @@ function AdminLayout() {
     const [user, setUser] = useState("");
     const [data, setData] = useState([]);
 
-    if (type != 1) {
-        return <Navigate to="/" />;
-    }
-    if (!localStorage.getItem("auth_token")) {
-        return <Navigate to="/login" />;
-    }
+    // if (type != 1) {
+    //     return <Navigate to="/" />;
+    // }
+    // if (!localStorage.getItem("auth_token")) {
+    //     return <Navigate to="/login" />;
+    // }
 
     useEffect(() => {
         setUser(localStorage.getItem("auth_user"));

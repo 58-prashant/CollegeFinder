@@ -41,7 +41,7 @@ Route::get('/search', [CollegeController::class,'search']);
 Route::post('bookmarks', [BookmarkController::class, 'createBookmark']);
 Route::delete('bookmarks/{id}', [BookmarkController::class, 'deleteBookmark']);
 Route::get('view-bookmarks/{id}', [BookmarkController::class, 'index']);
-Route::get('bookmarks/{id}', [BookmarkController::class, 'getBookmarksByCollegeId']);
+Route::get('bookmarks', [BookmarkController::class, 'getBookmarksByCollegeId']);
 
 
 

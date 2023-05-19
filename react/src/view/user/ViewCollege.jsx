@@ -26,7 +26,7 @@ function ViewCollege() {
                 navigate("/user");
             }
         });
-    }, []);
+    }, [id, navigate]);
 
     const [course, setCourse] = useState([
         {
@@ -37,46 +37,56 @@ function ViewCollege() {
             career: "",
         },
     ]);
-   
+
     const [photos, setPhotos] = useState([]);
 
     //For bookmark
     const [bookmarked, setBookmarked] = useState(false);
     const [bookmarkId, setBookmarkId] = useState(null);
-    const[userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState(null);
 
-    useEffect(()=>{
+    useEffect(() => {
         const storedUserId = localStorage.getItem("id");
-        if(storedUserId){
+        if (storedUserId) {
             setUserId(storedUserId);
         }
-    },[])
+    }, []);
     useEffect(() => {
         // Check if the college is bookmarked by the user
         const checkBookmark = async () => {
             try {
-                const response = await axios.get(
-                    `/api/bookmarks/`+id
-                );
-                if (response.data.status === 200) {
+                const response = await axios.get(`/api/bookmarks`, {
+                    params: {
+                        college_id: id,
+                        user_id: userId,
+                    },
+                });
+                if (response.data.status === 200 && response.data.bookmark) {
                     setBookmarked(true);
                     setBookmarkId(response.data.bookmark.id);
+                } else {
+                    setBookmarked(false);
+                    setBookmarkId(null);
                 }
             } catch (error) {
                 console.error("Error:", error);
             }
         };
-        checkBookmark();
-    }, [id]);
-
+        if (userId) {
+            checkBookmark();
+        }
+    }, [id, userId]);
+   
     const handleBookmark = async () => {
         try {
             const response = await axios.post("/api/bookmarks", {
                 college_id: id,
                 user_id: userId,
             });
-            setBookmarked(true);
             setBookmarkId(response.data.bookmark.id);
+            setBookmarked(true);
+            checkBookmark();
+            console.log(bookmarked);
             // Handle success or update UI accordingly
         } catch (error) {
             console.error("Error:", error);
@@ -85,14 +95,17 @@ function ViewCollege() {
 
     const handleUnbookmark = async () => {
         try {
-            const response = await axios.delete(`/api/bookmarks/${bookmarkId}`);
+            await axios.delete(`/api/bookmarks/${bookmarkId}`);
             setBookmarked(false);
             setBookmarkId(null);
+            checkBookmark();
             // Handle success or update UI accordingly
         } catch (error) {
             console.error("Error:", error);
         }
     };
+    
+    
 
     return (
         <div id="userdata" className="container-fluid px-4">
@@ -107,15 +120,17 @@ function ViewCollege() {
 
                 <div>
                     <h1>{data.name}</h1>{" "}
-                    {bookmarked ? (
-                        <button onClick={handleUnbookmark}>
-                            <i className="bi bi-bookmark-fill"></i>
-                        </button>
-                    ) : (
-                        <button onClick={handleBookmark}>
-                            <i className="bi bi-bookmark"></i>
-                        </button>
-                    )}
+                    <button
+                        onClick={bookmarked ? handleUnbookmark : handleBookmark}
+                    >
+                        <i
+                            className={`bi ${
+                                bookmarked ? "bi-bookmark-fill" : "bi-bookmark"
+                            }`}
+                            style={{ color: bookmarked ? "black" : "gray" }}
+                        ></i>
+                        {bookmarked ? "Bookmarked" : "Bookmark"}
+                    </button>
                     <div>
                         <i className="bi bi-calendar-event"></i>
                         {data.established_year}

@@ -5,12 +5,12 @@ import axios from "axios";
 function CollegeLayout(){
     const type = localStorage.getItem("ac_type");
     const navigate = useNavigate();
-    if (type != 2) {
-        return <Navigate to="/" />;
-    }
-    if (!localStorage.getItem("auth_token")) {
-        return <Navigate to="/login" />;
-    }
+    // if (type != 2) {
+    //     return <Navigate to="/" />;
+    // }
+    // if (!localStorage.getItem("auth_token")) {
+    //     return <Navigate to="/login" />;
+    // }
      const onLogout = (e) => {
          e.preventDefault();
          axios.post("/api/college-logout").then((res) => {

@@ -56,12 +56,6 @@ function Bookmark({  }) {
                                 </div>
                             </div>
                         </Link>
-                        // <li key={bookmark.id}>
-                        //     <h2>{bookmark.college.name}</h2>
-                        //     <p>Location: {bookmark.college.location}</p>
-                        //     <p>Description: {bookmark.college.description}</p>
-                        //     {/* Display other college details as needed */}
-                        // </li>
                     ))}
                 </ul>
             ) : (
