@@ -102,6 +102,42 @@ function College_profile() {
                  // Handle the error response, such as showing an error message
              });
      };
+     //ASK QUESTION
+     const [questions, setQuestions] = useState([]);
+     const [newQuestion, setNewQuestion] = useState("");
+     const [newReply, setNewReply] = useState(""); // State for the college's reply
+
+     useEffect(() => {
+         fetchQuestions();
+     }, []);
+
+     const fetchQuestions = async () => {
+         try {
+             const response = await axios.get("/api/questions");
+             setQuestions(response.data);
+         } catch (error) {
+             console.error(error);
+         }
+     };
+
+     const replyToQuestion = async (questionId) => {
+         try {
+             const response = await axios.put(`/api/questions/${questionId}`, {
+                 answer: newReply,
+             });
+             const updatedQuestion = response.data;
+             setQuestions((prevQuestions) =>
+                 prevQuestions.map((question) =>
+                     question.id === updatedQuestion.id
+                         ? updatedQuestion
+                         : question
+                 )
+             );
+             setNewReply("");
+         } catch (error) {
+             console.error(error);
+         }
+     };
     return (
         <div id="userdata" className="container-fluid px-4">
             <div className="card-header">
@@ -377,28 +413,53 @@ function College_profile() {
                         <h5>Event List:</h5>
                         <ul>
                             {events.map((event) => (
-                                    <li key={event.id}>
-                                        <b>
-                                            <h5>{event.title}</h5>
-                                        </b>
-                                        <button
-                                            onClick={() =>
-                                                handleDelete(event.id)
-                                            }
-                                        >
-                                            Delete
-                                        </button>
-                                        <p>
-                                            Available Slots:{" "}
-                                            {event.available_slots}
-                                        </p>
-                                        <p>Start Time: {event.start_time}</p>
-                                        <p>End Time: {event.end_time}</p>
-                                    </li>
-                                ))}
+                                <li key={event.id}>
+                                    <b>
+                                        <h5>{event.title}</h5>
+                                    </b>
+                                    <button
+                                        onClick={() => handleDelete(event.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                    <p>
+                                        Available Slots: {event.available_slots}
+                                    </p>
+                                    <p>Start Time: {event.start_time}</p>
+                                    <p>End Time: {event.end_time}</p>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </div>
+            </div>
+            <div>
+                <h3>Questions</h3>
+                {questions.length === 0 && <p>No questions available</p>}
+                {questions.map((question) => (
+                    <div key={question.id}>
+                        <p>{question.user && question.user.name} asked:</p>
+                        <p>{question.question}</p>
+                        {question.answer ? (
+                            <p>Answer: {question.answer}</p>
+                        ) : (
+                            <>
+                                <input
+                                    type="text"
+                                    value={newReply}
+                                    onChange={(e) =>
+                                        setNewReply(e.target.value)
+                                    }
+                                />
+                                <button
+                                    onClick={() => replyToQuestion(question.id)}
+                                >
+                                    Reply
+                                </button>
+                            </>
+                        )}
+                    </div>
+                ))}
             </div>
         </div>
     );
