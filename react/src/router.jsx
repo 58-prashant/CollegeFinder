@@ -32,10 +32,11 @@ import College_Register from "./view/college/college_Register";
 
 import CollegeLayout from "./components/CollegeLayout";
 import DefaultLayout from "./components/DefaultLayout";
-import College_profile from "./view/college/college_profile";
+// import College_profile from "./view/college/college_profile";
 import SearchCollege from "./view/user/SearchCollege";
 import SearchBar from "./view/guest/SearchBar";
 import Bookmark from "./view/user/Bookmark";
+import College_profile from "./view/college/College_profile";
 
 
 

@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Bookmark;
+use App\Models\Event;
+use App\Models\EventApplication;
 
 class User extends Authenticatable
 {
@@ -46,8 +48,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function bookmarks(): HasMany
+    public function Bookmarks(): HasMany
 {
     return $this->hasMany(Bookmark::class);
 }
+ public function Events()
+    {
+        return $this->belongsToMany(Event::class, 'event_applications')
+            ->using(EventApplication::class)
+           ->withTimestamps();
+    }
 }

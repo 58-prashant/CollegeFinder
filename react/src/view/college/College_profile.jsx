@@ -40,6 +40,69 @@ function College_profile() {
 
     const [photos, setPhotos] = useState([]);
 
+    //EVENT
+     const [title, setTitle] = useState("");
+     const [availableSlots, setAvailableSlots] = useState("");
+     const [startTime, setStartTime] = useState("");
+     const [endTime, setEndTime] = useState("");
+     const [errorMessage, setErrorMessage] = useState("");
+     const [successMessage, setSuccessMessage] = useState("");
+     const [description,setDescription] = useState("");
+    console.log(id);
+     const handleSubmit = async (e) => {
+         e.preventDefault();
+
+         try {
+             const response = await axios.post("/api/events", {
+                 title,
+                 description: description,
+                 college_id: id,
+                 available_slots: availableSlots,
+                 start_time: startTime,
+                 end_time: endTime,
+             });
+
+             setSuccessMessage(response.data.message);
+             setErrorMessage("");
+             setTitle("");
+             setAvailableSlots("");
+             setStartTime("");
+             setEndTime("");
+         } catch (error) {
+             setErrorMessage(error.response.data.message);
+             setSuccessMessage("");
+         }
+     };
+     //Fetch event
+     const [events, setEvents] = useState([]);
+
+     useEffect(() => {
+         fetchEvents();
+     }, []);
+
+     const fetchEvents = () => {
+         axios
+             .get("/api/events")
+             .then((response) => {
+                 setEvents(response.data);
+             })
+             .catch((error) => {
+                 console.log(error);
+             });
+     };
+     const handleDelete = (eventId) => {
+         // Make an HTTP request to delete the event
+         axios
+             .delete(`/api/events/${eventId}`)
+             .then((response) => {
+                 console.log(response.data.message);
+                 // Handle the successful response, such as showing a success message or updating the event list
+             })
+             .catch((error) => {
+                 console.log(error.response.data.message);
+                 // Handle the error response, such as showing an error message
+             });
+     };
     return (
         <div id="userdata" className="container-fluid px-4">
             <div className="card-header">
@@ -102,6 +165,30 @@ function College_profile() {
                             aria-selected="false"
                         >
                             Photos
+                        </button>
+                        <button
+                            className="nav-link"
+                            id="nav-event-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-event"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-event"
+                            aria-selected="false"
+                        >
+                            Events
+                        </button>
+                        <button
+                            className="nav-link"
+                            id="nav-eventList-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-eventList"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-eventList"
+                            aria-selected="false"
+                        >
+                            Event List
                         </button>
                     </div>
                 </nav>
@@ -209,6 +296,104 @@ function College_profile() {
                                     alt={`Photo ${index}`}
                                 />
                             ))}
+                    </div>
+                    <div
+                        className="tab-pane card-body border fade"
+                        id="nav-event"
+                        role="tabpanel"
+                        aria-labelledby="nav-event-tab"
+                        // tabindex="0"
+                    >
+                        <h5>Add Event:</h5>
+                        <form onSubmit={handleSubmit}>
+                            {errorMessage && <p>{errorMessage}</p>}
+                            {successMessage && <p>{successMessage}</p>}
+                            <div>
+                                <label>Title:</label>
+                                <input
+                                    type="text"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label>Description:</label>
+                                <textarea
+                                    type="text"
+                                    style={{ height: "100px", width: "450px" }}
+                                    value={description}
+                                    onChange={(e) =>
+                                        setDescription(e.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label>Available Slots:</label>
+                                <input
+                                    type="number"
+                                    value={availableSlots}
+                                    onChange={(e) =>
+                                        setAvailableSlots(e.target.value)
+                                    }
+                                    required
+                                    min="1"
+                                />
+                            </div>
+                            <div>
+                                <label>Start Time:</label>
+                                <input
+                                    type="datetime-local"
+                                    value={startTime}
+                                    onChange={(e) =>
+                                        setStartTime(e.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label>End Time:</label>
+                                <input
+                                    type="datetime-local"
+                                    value={endTime}
+                                    onChange={(e) => setEndTime(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <button type="submit">Start Event</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div
+                        className="tab-pane card-body border fade"
+                        id="nav-eventList"
+                        role="tabpanel"
+                        aria-labelledby="nav-eventList-tab"
+                        // tabindex="0"
+                    >
+                        <h5>Event List:</h5>
+                        <ul>
+                            {events.map((event) => (
+                                <li key={event.id}>
+                                    <b>
+                                        <h5>{event.title}</h5>
+                                    </b>
+                                    <button
+                                        onClick={() => handleDelete(event.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                    <p>
+                                        Available Slots: {event.available_slots}
+                                    </p>
+                                    <p>Start Time: {event.start_time}</p>
+                                    <p>End Time: {event.end_time}</p>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </div>

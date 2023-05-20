@@ -105,7 +105,38 @@ function ViewCollege() {
         }
     };
     
-    
+    //FOR EVENTS
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        fetchEvents();
+    }, []);
+
+    const fetchEvents = () => {
+        axios
+            .get("/api/events")
+            .then((response) => {
+                setEvents(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const applyForEvent = (eventId) => {
+        axios
+            .post(`/api/events/${eventId}/apply`, {
+                user_id: userId,
+            })
+            .then((response) => {
+                console.log(response.data.message);
+                swal
+                // Update the event list or perform other actions as needed
+            })
+            .catch((error) => {
+                console.log(error.response.data.message);
+            });
+    };
 
     return (
         <div id="userdata" className="container-fluid px-4">
@@ -180,6 +211,18 @@ function ViewCollege() {
                             aria-selected="false"
                         >
                             Photos
+                        </button>
+                        <button
+                            className="nav-link"
+                            id="nav-event-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-event"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-event"
+                            aria-selected="false"
+                        >
+                            Event
                         </button>
                     </div>
                 </nav>
@@ -287,6 +330,32 @@ function ViewCollege() {
                                     alt={`Photo ${index}`}
                                 />
                             ))}
+                    </div>
+                    <div
+                        className="tab-pane card-body border fade"
+                        id="nav-event"
+                        role="tabpanel"
+                        aria-labelledby="nav-event-tab"
+                        // tabindex="0"
+                    >
+                        <h5>Event:</h5>
+                        <ul>
+                            {events.map((event) => (
+                                <li key={event.id}>
+                                    <h3>{event.title}</h3>
+                                    <p>
+                                        Available Slots: {event.available_slots}
+                                    </p>
+                                    <p>Start Time: {event.start_time}</p>
+                                    <p>End Time: {event.end_time}</p>
+                                    <button
+                                        onClick={() => applyForEvent(event.id)}
+                                    >
+                                        Apply
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </div>
             </div>
