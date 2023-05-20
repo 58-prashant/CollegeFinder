@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\CollegeController;
 use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\QuestionController;
 
 
 
@@ -27,6 +28,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout',[AuthController::class,'logout']);
     Route::post('college-logout',[CollegeController::class,'logout']);
+    Route::post('/questions', [QuestionController::class, 'store']);
+    Route::put('/questions/{question}', [QuestionController::class, 'update']);
 });
 
 Route::post('register',[AuthController::class,'register']);
@@ -51,6 +54,8 @@ Route::get('/events', [EventController::class, 'index']);
 Route::post('/events/{event}/apply', [EventController::class, 'apply']);
 
 
+
+Route::get('/questions', [QuestionController::class, 'index']);
 
 Route::get('view-user',[AuthController::class,'view']);
 Route::post('create-user',[AuthController::class,'createUser']);

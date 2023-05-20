@@ -76,7 +76,7 @@ function ViewCollege() {
             checkBookmark();
         }
     }, [id, userId]);
-   
+
     const handleBookmark = async () => {
         try {
             const response = await axios.post("/api/bookmarks", {
@@ -104,7 +104,7 @@ function ViewCollege() {
             console.error("Error:", error);
         }
     };
-    
+
     //FOR EVENTS
     const [events, setEvents] = useState([]);
 
@@ -130,14 +130,44 @@ function ViewCollege() {
             })
             .then((response) => {
                 console.log(response.data.message);
-                swal
+                swal;
                 // Update the event list or perform other actions as needed
             })
             .catch((error) => {
                 console.log(error.response.data.message);
             });
     };
+    //ASK QUESTION
+    const [questions, setQuestions] = useState([]);
+    const [newQuestion, setNewQuestion] = useState("");
 
+    useEffect(() => {
+        fetchQuestions();
+    }, []);
+
+    const fetchQuestions = async () => {
+        try {
+            const response = await axios.get("/api/questions");
+            setQuestions(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const askQuestion = async () => {
+       try {
+           const response = await axios.post("/api/questions", {
+               question: newQuestion,
+               college_id: id,
+               user_id: userId,
+           });
+           const newQuestionData = response.data;
+           setQuestions([...questions, newQuestionData]);
+           setNewQuestion("");
+       } catch (error) {
+           console.error(error);
+       }
+    };
     return (
         <div id="userdata" className="container-fluid px-4">
             <div className="card-header">
@@ -340,24 +370,54 @@ function ViewCollege() {
                     >
                         <h5>Event:</h5>
                         <ul>
-                            {events ?(
-                            events.map((event) => (
-                                <li key={event.id}>
-                                    <h3>{event.title}</h3>
-                                    <p>
-                                        Available Slots: {event.available_slots}
-                                    </p>
-                                    <p>Start Time: {event.start_time}</p>
-                                    <p>End Time: {event.end_time}</p>
-                                    <button
-                                        onClick={() => applyForEvent(event.id)}
-                                    >
-                                        Apply
-                                    </button>
-                                </li>
-                            ))):(<p>No events available</p>)}
+                            {events ? (
+                                events.map((event) => (
+                                    <li key={event.id}>
+                                        <h3>{event.title}</h3>
+                                        <p>
+                                            Available Slots:{" "}
+                                            {event.available_slots}
+                                        </p>
+                                        <p>Start Time: {event.start_time}</p>
+                                        <p>End Time: {event.end_time}</p>
+                                        <button
+                                            onClick={() =>
+                                                applyForEvent(event.id)
+                                            }
+                                        >
+                                            Apply
+                                        </button>
+                                    </li>
+                                ))
+                            ) : (
+                                <p>No events available</p>
+                            )}
                         </ul>
                     </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h3>Ask a Question</h3>
+                    <input
+                        type="text"
+                        value={newQuestion}
+                        onChange={(e) => setNewQuestion(e.target.value)}
+                    />
+                    <button onClick={askQuestion}>Submit</button>
+                </div>
+                <div>
+                    <h3>Questions</h3>
+                    {questions.length === 0 && <p>No questions available</p>}
+                    {questions.map((question) => (
+                        <div key={question.id}>
+                            <p>{question.user && question.user.name} asked:</p>
+                            <p>{question.question}</p>
+                            {question.answer && (
+                                <p>Answer: {question.answer}</p>
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
