@@ -114,7 +114,7 @@ function ViewCollege() {
 
     const fetchEvents = () => {
         axios
-            .get("/api/events")
+            .get(`/api/events?college_id=${id}`)
             .then((response) => {
                 setEvents(response.data);
             })
@@ -340,7 +340,8 @@ function ViewCollege() {
                     >
                         <h5>Event:</h5>
                         <ul>
-                            {events.map((event) => (
+                            {events ?(
+                            events.map((event) => (
                                 <li key={event.id}>
                                     <h3>{event.title}</h3>
                                     <p>
@@ -354,7 +355,7 @@ function ViewCollege() {
                                         Apply
                                     </button>
                                 </li>
-                            ))}
+                            ))):(<p>No events available</p>)}
                         </ul>
                     </div>
                 </div>

@@ -48,7 +48,7 @@ function College_profile() {
      const [errorMessage, setErrorMessage] = useState("");
      const [successMessage, setSuccessMessage] = useState("");
      const [description,setDescription] = useState("");
-    console.log(id);
+
      const handleSubmit = async (e) => {
          e.preventDefault();
 
@@ -61,7 +61,6 @@ function College_profile() {
                  start_time: startTime,
                  end_time: endTime,
              });
-
              setSuccessMessage(response.data.message);
              setErrorMessage("");
              setTitle("");
@@ -81,14 +80,14 @@ function College_profile() {
      }, []);
 
      const fetchEvents = () => {
-         axios
-             .get("/api/events")
-             .then((response) => {
-                 setEvents(response.data);
-             })
-             .catch((error) => {
-                 console.log(error);
-             });
+             axios
+                 .get(`/api/events?college_id=${id}`)
+                 .then((response) => {
+                     setEvents(response.data);
+                 })
+                 .catch((error) => {
+                     console.log(error);
+                 });
      };
      const handleDelete = (eventId) => {
          // Make an HTTP request to delete the event
@@ -319,6 +318,7 @@ function College_profile() {
                             </div>
                             <div>
                                 <label>Description:</label>
+                                <br />
                                 <textarea
                                     type="text"
                                     style={{ height: "100px", width: "450px" }}
@@ -377,22 +377,25 @@ function College_profile() {
                         <h5>Event List:</h5>
                         <ul>
                             {events.map((event) => (
-                                <li key={event.id}>
-                                    <b>
-                                        <h5>{event.title}</h5>
-                                    </b>
-                                    <button
-                                        onClick={() => handleDelete(event.id)}
-                                    >
-                                        Delete
-                                    </button>
-                                    <p>
-                                        Available Slots: {event.available_slots}
-                                    </p>
-                                    <p>Start Time: {event.start_time}</p>
-                                    <p>End Time: {event.end_time}</p>
-                                </li>
-                            ))}
+                                    <li key={event.id}>
+                                        <b>
+                                            <h5>{event.title}</h5>
+                                        </b>
+                                        <button
+                                            onClick={() =>
+                                                handleDelete(event.id)
+                                            }
+                                        >
+                                            Delete
+                                        </button>
+                                        <p>
+                                            Available Slots:{" "}
+                                            {event.available_slots}
+                                        </p>
+                                        <p>Start Time: {event.start_time}</p>
+                                        <p>End Time: {event.end_time}</p>
+                                    </li>
+                                ))}
                         </ul>
                     </div>
                 </div>

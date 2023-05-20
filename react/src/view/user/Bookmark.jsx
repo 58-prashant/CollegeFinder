@@ -32,7 +32,7 @@ function Bookmark({  }) {
                         <Link
                             className="link"
                             key={bookmark.id}
-                            to={"/view-college/" + bookmark.id}
+                            to={"/view-college/" + bookmark.college_id}
                         >
                             <div className="card" key={bookmark.id}>
                                 <div className="college">

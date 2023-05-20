@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\College;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\EventApplication;
 
@@ -14,10 +16,12 @@ class EventController extends Controller
         // Validate the incoming request
         $validatedData = $request->validate([
             'title' => 'required',
+            'description' => 'required',
             'available_slots' => 'required|integer|min:1',
             'start_time' => 'required|date',
             'end_time' => 'required|date|after:start_time',
             'college_id' => 'required|exists:colleges,id',
+            
         ]);
 
         // Create a new event
@@ -29,42 +33,42 @@ class EventController extends Controller
 
     public function apply(Request $request, Event $event)
     {
-        // Check if the event is still within the application time limit
-        // if (!$event->isWithinApplicationTimeLimit()) {
-        //     return response()->json(['message' => 'Event application is no longer available'], 400);
-        // }
+      
+            // Check if there are available slots
+            if ($event->available_slots <= 0) {
+                return response()->json(['message' => 'No slots available'], 400);
+            }
 
-        // Check if the event has available slots
-        if ($event->available_slots <= 0) {
-            return response()->json(['message' => 'No slots available'], 400);
+            // Get the current authenticated student
+            $userId = $request->user_id;
+            $student = User::find($userId);
+
+            // Check if the student has already applied for the event
+            if (!$student || $event->applications()->where('student_id', $userId)->exists()) {
+                return response()->json(['message' => 'You have already applied for this event'], 400);
+            }
+
+            // Create a new event application and prefill the student details
+            $applicationData = [
+                'event_id' => $event->id,
+                'student_id' => $userId,
+                // Add more columns for additional student details if needed
+            ];
+
+            $eventApplication = EventApplication::create($applicationData);
+
+            // Decrement the available slots
+            $event->decrement('available_slots');
+
+            return response()->json(['message' => 'Event application submitted successfully'], 201);
         }
 
-        // Get the current authenticated student
-        $userId = $request->user_id;
-        $student = User::find($userId);
-
-        // Check if the student has already applied for the event
-        if (!$student || $event->applications()->where('student_id', $userId)->exists()) {
-            return response()->json(['message' => 'You have already applied for this event'], 400);
-        }
-
-        // Create a new event application and prefill the student details
-        $applicationData = [
-            'event_id' => $event->id,
-            'student_id' => $userId,
-            // Add more columns for additional student details if needed
-        ];
-
-        $eventApplication = EventApplication::create($applicationData);
-
-        // Decrement the available slots
-        $event->decrement('available_slots');
-
-        return response()->json(['message' => 'Event application submitted successfully'], 201);
-    }
-     public function index()
+        
+     public function index(Request $request)
     {
-        $events = Event::all();
+        $collegeId = $request ->query('college_id');
+       
+        $events = Event::where('college_id',$collegeId)->get();
 
         return response()->json($events);
     }

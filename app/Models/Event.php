@@ -11,6 +11,7 @@ class Event extends Model
 {
     protected $fillable = [
         'title',
+        'description',
         'available_slots',
         'start_time',
         'end_time',
@@ -25,25 +26,5 @@ class Event extends Model
     public function applications()
     {
         return $this->hasMany(EventApplication::class);
-    }
-
-    public function isWithinApplicationTimeLimit()
-    {
-        $now = Carbon::now();
-        $start = Carbon::parse($this->start_time);
-        $end = Carbon::parse($this->end_time);
-
-         // Debug statements
-    Log::info('Current Time: ' . $now);
-    Log::info('Event Start Time: ' . $start);
-    Log::info('Event End Time: ' . $end);
-
-         $isWithinLimit = $now->between($start,$end,true);
-    
-        // Debug statement
-        Log::info('Is Within Application Time Limit: ' . ($isWithinLimit ? 'true' : 'false'));
-        
-        return $isWithinLimit;
-       
     }
 }
