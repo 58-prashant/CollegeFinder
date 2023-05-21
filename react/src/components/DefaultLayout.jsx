@@ -3,7 +3,15 @@ import "../assets/css/guest.css";
 
 function DefaultLayout(){
     if (localStorage.getItem("auth_token")) {
-        return <Navigate to="/" />;
+         if (type == 0) {
+             return <Navigate to="/profile" />;
+         }
+         if (type == 1) {
+             return <Navigate to="/admin" />;
+         }
+          if (type == 2) {
+              return <Navigate to="/college-profile" />;
+          }
     }
  return (
      <div id="guest">

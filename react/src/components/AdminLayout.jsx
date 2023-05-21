@@ -17,11 +17,14 @@ function AdminLayout() {
     const [user, setUser] = useState("");
     const [data, setData] = useState([]);
 
-    if (type != 1) {
-        return <Navigate to="/" />;
+    if (type == 0) {
+        return <Navigate to="/profile" />;
+    }
+    if (type == 2) {
+        return <Navigate to="/college-profile" />;
     }
     if (!localStorage.getItem("auth_token")) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/home" />;
     }
 
     useEffect(() => {

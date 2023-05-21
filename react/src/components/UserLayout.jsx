@@ -17,11 +17,15 @@ function UserLayout() {
     const location = useLocation();
     const type = localStorage.getItem("ac_type");
     const email = localStorage.getItem("email");
-    if (type != 0) {
+    
+    if (type == 1) {
         return <Navigate to="/admin" />;
     }
+    if (type == 2) {
+        return <Navigate to="/college-profile" />;
+    }
     if (!localStorage.getItem("auth_token")) {
-        return <Navigate to="/" />;
+        return <Navigate to="/home" />;
     }
     useEffect(()=>{
         setUser(localStorage.getItem("auth_user"));
