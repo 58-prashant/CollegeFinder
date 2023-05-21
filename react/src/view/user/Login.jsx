@@ -69,9 +69,6 @@ function Login() {
                         type="password"
                         placeholder="Password"
                     />
-                    <Link className="forget" to="/">
-                        Forget password?
-                    </Link>
                     <button className="btn btn-block">Login</button>
                     <Link to="/college-login">Login as College</Link>
                     <p className="message">

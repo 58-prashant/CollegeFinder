@@ -26,17 +26,28 @@ const SearchBar = () => {
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search..."
                 />
-                <button onClick={handleSearch}>Search</button>
+                <button className="btn-search" onClick={handleSearch}>
+                    Search
+                </button>
 
                 <ul>
                     {results.map((college) => (
                         <Link
                             className="link"
                             key={college.id}
-                            to={"/view-college/" + college.id}
+                            to={"/viewCollege/" + college.id}
                         >
                             <div className="card" key={college.id}>
                                 <div className="college">
+                                    <div>
+                                        <img
+                                            style={{ width: 100 }}
+                                            src={
+                                                "http://localhost:8000/" +
+                                                college.image
+                                            }
+                                        />
+                                    </div>
                                     <div>
                                         <h2>{college.name}</h2>
                                     </div>

@@ -2,12 +2,12 @@ import { Link, Navigate, Outlet } from "react-router-dom";
 import "../assets/css/guest.css";
 
 function DefaultLayout(){
-    // if (localStorage.getItem("auth_token")) {
-    //     return <Navigate to="/" />;
-    // }
+    if (localStorage.getItem("auth_token")) {
+        return <Navigate to="/" />;
+    }
  return (
      <div id="guest">
-         <nav className="navigation-bar">
+         <header className="navigation-bar">
              <div>
                  <Link to="/home">
                      <img className="logo" src="Logo.png" alt="Logo" />
@@ -23,7 +23,7 @@ function DefaultLayout(){
                  </Link>
                  <Link to="/login">Login</Link>
              </div>
-         </nav>
+         </header>
          
          <main className="main">
              <Outlet />

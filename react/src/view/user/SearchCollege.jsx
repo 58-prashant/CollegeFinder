@@ -23,7 +23,9 @@ const SearchCollege = () => {
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
             />
-            <button onClick={handleSearch}>Search</button>
+            <button className="btn-search" onClick={handleSearch}>
+                Search
+            </button>
 
             <ul>
                 {results.length > 0
@@ -35,6 +37,15 @@ const SearchCollege = () => {
                           >
                               <div className="card" key={college.id}>
                                   <div className="college">
+                                      <div>
+                                          <img
+                                              style={{ width: 100 }}
+                                              src={
+                                                  "http://localhost:8000/" +
+                                                  college.image
+                                              }
+                                          />
+                                      </div>
                                       <div>
                                           <h2>{college.name}</h2>
                                       </div>

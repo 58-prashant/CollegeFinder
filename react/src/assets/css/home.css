@@ -26,3 +26,15 @@ body{
 .link h2{
     color: #000;
 }
+.content1{
+    border-width: 2px;
+}
+.content2{
+    margin-top: 40px;
+    border-color: #000;
+    border-width: 10px;
+}
+#nav-photo img{
+    width: 50%;
+    padding: 10px;
+}

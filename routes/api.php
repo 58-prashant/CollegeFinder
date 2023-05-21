@@ -55,7 +55,7 @@ Route::post('/events/{event}/apply', [EventController::class, 'apply']);
 
 
 
-Route::get('/questions', [QuestionController::class, 'index']);
+Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
 
 Route::get('view-user',[AuthController::class,'view']);
 Route::post('create-user',[AuthController::class,'createUser']);

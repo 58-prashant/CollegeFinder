@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-function ViewCollege() {
+function ViewColleges() {
     const [data, setData] = useState({
         name: "",
         email: "",
@@ -43,7 +43,7 @@ function ViewCollege() {
     return (
         <div id="userdata" className="container-fluid px-4">
             <div className="card-header">
-                <h1>College Detail</h1>
+                <h1>College Details</h1>
             </div>
             <div>
                 <img
@@ -215,4 +215,4 @@ function ViewCollege() {
         </div>
     );
 }
-export default ViewCollege;
+export default ViewColleges;

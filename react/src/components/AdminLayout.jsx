@@ -17,12 +17,12 @@ function AdminLayout() {
     const [user, setUser] = useState("");
     const [data, setData] = useState([]);
 
-    // if (type != 1) {
-    //     return <Navigate to="/" />;
-    // }
-    // if (!localStorage.getItem("auth_token")) {
-    //     return <Navigate to="/login" />;
-    // }
+    if (type != 1) {
+        return <Navigate to="/" />;
+    }
+    if (!localStorage.getItem("auth_token")) {
+        return <Navigate to="/login" />;
+    }
 
     useEffect(() => {
         setUser(localStorage.getItem("auth_user"));
@@ -66,15 +66,6 @@ function AdminLayout() {
                 >
                     <span className="bi bi-person-circle"></span>
                     Profile
-                </Link>
-                <Link
-                    className={
-                        location.pathname === "/admin-dashboard" ? "active" : ""
-                    }
-                    to="/admin-dashboard"
-                >
-                    <span className="bi bi-speedometer"></span>
-                    Dashboard
                 </Link>
                 <Link
                     className={

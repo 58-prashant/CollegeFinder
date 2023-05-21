@@ -6,15 +6,13 @@ import Home from "./view/user/Home";
 import User from "./view/user/User";
 import EditUser from "./view/user/EditUser";
 import ViewCollege from "./view/user/ViewCollege";
+import SearchCollege from "./view/user/SearchCollege";
+import Bookmark from "./view/user/Bookmark";
 
 import GuestLayout from "./components/GuestLayout";
 import Login from "./view/user/Login";
 import Verification from "./view/user/Verification";
 import Register from "./view/user/Register";
-
-
-import Guest from "./view/guest/Guest";
-
 
 import AdminLayout from "./components/AdminLayout";
 import PageNotFound from "./view/PageNotFound";
@@ -27,16 +25,20 @@ import UserEdit from "./view/admin/UserEdit";
 import AddCollege from "./view/admin/AddCollege";
 import CollegeEdit from "./view/admin/CollegeEdit";
 import CollegeProfile from "./view/admin/CollegeProfile";
-import College_Login from "./view/college/college_Login";
-import College_Register from "./view/college/college_Register";
+
 
 import CollegeLayout from "./components/CollegeLayout";
-import DefaultLayout from "./components/DefaultLayout";
-// import College_profile from "./view/college/college_profile";
-import SearchCollege from "./view/user/SearchCollege";
-import SearchBar from "./view/guest/SearchBar";
-import Bookmark from "./view/user/Bookmark";
+import College_Login from "./view/college/college_Login";
+import College_Register from "./view/college/college_Register";
 import College_profile from "./view/college/College_profile";
+
+import DefaultLayout from "./components/DefaultLayout";
+import Guest from "./view/guest/Guest";
+import SearchBar from "./view/guest/SearchBar";
+import ViewColleges from "./view/guest/ViewColleges";
+import College_Edit from "./view/college/College_Edit";
+
+
 
 
 
@@ -92,6 +94,10 @@ const router = createBrowserRouter([
                 path:"/college-profile",
                 element:<College_profile/>
             },
+            {
+                path:"/edit-college/:id",
+                element:<College_Edit/>
+            }
         ]
 
     },
@@ -105,7 +111,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/viewCollege/:id",
-                element: <ViewCollege />,
+                element: <ViewColleges />,
             },
             {
                 path:"/guest-search",

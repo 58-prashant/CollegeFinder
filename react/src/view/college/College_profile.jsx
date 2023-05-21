@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import swal from "sweetalert";
 
 function College_profile() {
     const [data, setData] = useState({
@@ -23,7 +24,6 @@ function College_profile() {
                 setPhotos(res.data.image);
             } else if (res.data.status === 404) {
                 swal("Error", res.data.message, "error");
-               
             }
         });
     }, []);
@@ -41,116 +41,118 @@ function College_profile() {
     const [photos, setPhotos] = useState([]);
 
     //EVENT
-     const [title, setTitle] = useState("");
-     const [availableSlots, setAvailableSlots] = useState("");
-     const [startTime, setStartTime] = useState("");
-     const [endTime, setEndTime] = useState("");
-     const [errorMessage, setErrorMessage] = useState("");
-     const [successMessage, setSuccessMessage] = useState("");
-     const [description,setDescription] = useState("");
+    const [title, setTitle] = useState("");
+    const [availableSlots, setAvailableSlots] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+    const [description, setDescription] = useState("");
 
-     const handleSubmit = async (e) => {
-         e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-         try {
-             const response = await axios.post("/api/events", {
-                 title,
-                 description: description,
-                 college_id: id,
-                 available_slots: availableSlots,
-                 start_time: startTime,
-                 end_time: endTime,
-             });
-             setSuccessMessage(response.data.message);
-             setErrorMessage("");
-             setTitle("");
-             setAvailableSlots("");
-             setStartTime("");
-             setEndTime("");
-         } catch (error) {
-             setErrorMessage(error.response.data.message);
-             setSuccessMessage("");
-         }
-     };
-     //Fetch event
-     const [events, setEvents] = useState([]);
+        try {
+            const response = await axios.post("/api/events", {
+                title,
+                description: description,
+                college_id: id,
+                available_slots: availableSlots,
+                start_time: startTime,
+                end_time: endTime,
+            });
 
-     useEffect(() => {
-         fetchEvents();
-     }, []);
+            setErrorMessage("");
+            setTitle("");
+            setAvailableSlots("");
+            setStartTime("");
+            setEndTime("");
+            swal("Success", response.data.message, "success");
+        } catch (error) {
+            swal("Error", response.data.message, "error");
+            setSuccessMessage("");
+        }
+    };
+    //Fetch event
+    const [events, setEvents] = useState([]);
 
-     const fetchEvents = () => {
-             axios
-                 .get(`/api/events?college_id=${id}`)
-                 .then((response) => {
-                     setEvents(response.data);
-                 })
-                 .catch((error) => {
-                     console.log(error);
-                 });
-     };
-     const handleDelete = (eventId) => {
-         // Make an HTTP request to delete the event
-         axios
-             .delete(`/api/events/${eventId}`)
-             .then((response) => {
-                 console.log(response.data.message);
-                 // Handle the successful response, such as showing a success message or updating the event list
-             })
-             .catch((error) => {
-                 console.log(error.response.data.message);
-                 // Handle the error response, such as showing an error message
-             });
-     };
-     //ASK QUESTION
-     const [questions, setQuestions] = useState([]);
-     const [newQuestion, setNewQuestion] = useState("");
-     const [newReply, setNewReply] = useState(""); // State for the college's reply
+    useEffect(() => {
+        fetchEvents();
+    }, []);
 
-     useEffect(() => {
-         fetchQuestions();
-     }, []);
+    const fetchEvents = () => {
+        axios
+            .get(`/api/events?college_id=${id}`)
+            .then((response) => {
+                setEvents(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+    const handleDelete = (eventId) => {
+        // Make an HTTP request to delete the event
+        axios
+            .delete(`/api/events/${eventId}`)
+            .then((response) => {
+                console.log(response.data.message);
+                // Handle the successful response, such as showing a success message or updating the event list
+            })
+            .catch((error) => {
+                console.log(error.response.data.message);
+                // Handle the error response, such as showing an error message
+            });
+    };
+    //ASK QUESTION
+    const [questions, setQuestions] = useState([]);
+    const [newQuestion, setNewQuestion] = useState("");
+    const [newReply, setNewReply] = useState(""); // State for the college's reply
 
-     const fetchQuestions = async () => {
-         try {
-             const response = await axios.get("/api/questions");
-             setQuestions(response.data);
-         } catch (error) {
-             console.error(error);
-         }
-     };
+    useEffect(() => {
+        fetchQuestions();
+    }, []);
 
-     const replyToQuestion = async (questionId) => {
-         try {
-             const response = await axios.put(`/api/questions/${questionId}`, {
-                 answer: newReply,
-             });
-             const updatedQuestion = response.data;
-             setQuestions((prevQuestions) =>
-                 prevQuestions.map((question) =>
-                     question.id === updatedQuestion.id
-                         ? updatedQuestion
-                         : question
-                 )
-             );
-             setNewReply("");
-         } catch (error) {
-             console.error(error);
-         }
-     };
+    const fetchQuestions = async () => {
+        try {
+            const response = await axios.get(`/api/questions?collegeId=${id}`);
+            setQuestions(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const replyToQuestion = async (questionId) => {
+        try {
+            const response = await axios.put(`/api/questions/${questionId}`, {
+                answer: newReply,
+            });
+            swal("Success", response.data, "success");
+            const updatedQuestion = response.data;
+            setQuestions((prevQuestions) =>
+                prevQuestions.map((question) =>
+                    question.id === updatedQuestion.id
+                        ? updatedQuestion
+                        : question
+                )
+            );
+            setNewReply("");
+        } catch (error) {
+            console.error(error);
+        }
+    };
     return (
         <div id="userdata" className="container-fluid px-4">
-            <div className="card-header">
-                <h1>College Detail</h1>
-            </div>
+            <div className="card-header"></div>
             <div>
                 <img
                     style={{ width: 100 }}
                     src={"http://localhost:8000/" + data.image}
                 />
-
                 <div>
                     <h1>{data.name}</h1>
+                    <Link className="btn-edit" to={"/edit-college/" + data.id}>
+                        Edit
+                    </Link>
                     <div>
                         <i className="bi bi-calendar-event"></i>
                         {data.established_year}
@@ -225,6 +227,18 @@ function College_profile() {
                         >
                             Event List
                         </button>
+                        <button
+                            className="nav-link"
+                            id="nav-question-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-question"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-question"
+                            aria-selected="false"
+                        >
+                            Question
+                        </button>
                     </div>
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
@@ -292,7 +306,22 @@ function College_profile() {
                                 {course.modules ? (
                                     <div>
                                         <h5>Modules:</h5>
-                                        <div>{course.modules}</div>
+                                        <ul>
+                                            {course.modules
+                                                .split(".")
+                                                .map((item, index) => {
+                                                    const trimmedItem =
+                                                        item.trim();
+                                                    if (trimmedItem) {
+                                                        return (
+                                                            <li key={index}>
+                                                                {trimmedItem}
+                                                            </li>
+                                                        );
+                                                    }
+                                                    return null;
+                                                })}
+                                        </ul>
                                     </div>
                                 ) : (
                                     <></>
@@ -302,7 +331,22 @@ function College_profile() {
                                 {course.career ? (
                                     <div>
                                         <h5>Career:</h5>
-                                        <div>{course.career}</div>
+                                        <ul>
+                                            {course.career
+                                                .split(".")
+                                                .map((item, index) => {
+                                                    const trimmedItem =
+                                                        item.trim();
+                                                    if (trimmedItem) {
+                                                        return (
+                                                            <li key={index}>
+                                                                {trimmedItem}
+                                                            </li>
+                                                        );
+                                                    }
+                                                    return null;
+                                                })}
+                                        </ul>
                                     </div>
                                 ) : (
                                     <></>
@@ -323,7 +367,7 @@ function College_profile() {
                         {photos &&
                             photos.map((photo, index) => (
                                 <img
-                                    style={{ width: 100 }}
+                                    style={{ width: "40%" }}
                                     src={
                                         "http://localhost:8000/" +
                                         photo.filename
@@ -341,8 +385,6 @@ function College_profile() {
                     >
                         <h5>Add Event:</h5>
                         <form onSubmit={handleSubmit}>
-                            {errorMessage && <p>{errorMessage}</p>}
-                            {successMessage && <p>{successMessage}</p>}
                             <div>
                                 <label>Title:</label>
                                 <input
@@ -418,10 +460,12 @@ function College_profile() {
                                         <h5>{event.title}</h5>
                                     </b>
                                     <button
+                                        className="btn-delete"
                                         onClick={() => handleDelete(event.id)}
                                     >
                                         Delete
                                     </button>
+                                    <p>Description: {event.description}</p>
                                     <p>
                                         Available Slots: {event.available_slots}
                                     </p>
@@ -431,35 +475,46 @@ function College_profile() {
                             ))}
                         </ul>
                     </div>
-                </div>
-            </div>
-            <div>
-                <h3>Questions</h3>
-                {questions.length === 0 && <p>No questions available</p>}
-                {questions.map((question) => (
-                    <div key={question.id}>
-                        <p>{question.user && question.user.name} asked:</p>
-                        <p>{question.question}</p>
-                        {question.answer ? (
-                            <p>Answer: {question.answer}</p>
-                        ) : (
-                            <>
-                                <input
-                                    type="text"
-                                    value={newReply}
-                                    onChange={(e) =>
-                                        setNewReply(e.target.value)
-                                    }
-                                />
-                                <button
-                                    onClick={() => replyToQuestion(question.id)}
-                                >
-                                    Reply
-                                </button>
-                            </>
+                    <div className="tab-pane card-body border fade"
+                        id="nav-question"
+                        role="tabpanel"
+                        aria-labelledby="nav-question-tab"
+                        // tabindex="0" 
+                        >
+                        <h3>Questions</h3>
+                        {questions.length === 0 && (
+                            <p>No questions available</p>
                         )}
+                        {questions.map((question) => (
+                            <div key={question.id}>
+                                <p>
+                                    {question.user && question.user.name} asked:
+                                </p>
+                                <p>{question.question}</p>
+                                {question.answer ? (
+                                    <p>Answer: {question.answer}</p>
+                                ) : (
+                                    <>
+                                        <input
+                                            type="text"
+                                            value={newReply}
+                                            onChange={(e) =>
+                                                setNewReply(e.target.value)
+                                            }
+                                        />
+                                        <button
+                                            onClick={() =>
+                                                replyToQuestion(question.id)
+                                            }
+                                        >
+                                            Reply
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
         </div>
     );

@@ -54,9 +54,9 @@ input:focus {
     outline: 0;
     background: #FFBF75 ;
     border: 0;
-    border-radius: 10px;
+    border-radius: 5px;
     text-decoration: none;
-    padding: 15px;
+    padding: 2px;
     color: #392727;
     font-size: 16px;
     -webkit-transition: all 0.3 ease;
@@ -66,6 +66,17 @@ input:focus {
 .btn-edit{
     margin-top: 40px;
 }
+.btn-search{
+    padding: 2px;
+    border-radius: 5px;
+    background-color: #FFBF75;
+}
+.btn-submit{
+    padding: 2px;
+    border-radius: 5px;
+    background-color: #FFBF75;
+}
+
 header{
     position: fixed;
 }
@@ -162,7 +173,7 @@ header{
     z-index: 1;
 }
 main{
-    flex: 1;
+    flex: 0;
     margin-left: 160px;
 }
 #layout aside > a {

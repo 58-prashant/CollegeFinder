@@ -25,12 +25,17 @@ class QuestionController extends Controller
 
         return response()->json($question, 201);
     }
-    public function index()
-    {
-        $questions = Question::with('user')->get();
+    public function index(Request $request)
+{
+    $collegeId = $request->query('collegeId');
 
-        return response()->json($questions);
-    }
+    $questions = Question::with('user')
+        ->where('college_id', $collegeId)
+        ->get();
+
+    return response()->json($questions);
+}
+
 
     public function update(Request $request, Question $question)
     {

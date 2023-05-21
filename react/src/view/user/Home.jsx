@@ -38,6 +38,15 @@ function Home() {
                         <div className="card" key={item.id}>
                             <div className="college">
                                 <div>
+                                    <img
+                                        style={{ width: 100 }}
+                                        src={
+                                            "http://localhost:8000/" +
+                                            item.image
+                                        }
+                                    />
+                                </div>
+                                <div>
                                     <h2>{item.name}</h2>
                                 </div>
                                 <div className="info">

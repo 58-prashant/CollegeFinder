@@ -226,6 +226,7 @@ if($photosData){
         $photosData = $request->file('photos');
     
     // Store the course data
+    if($courseData){
     foreach ($courseData as $course) {
         if (isset($course['id'])) {
             $courseId = $course['id'];
@@ -249,6 +250,7 @@ if($photosData){
         $newCourse->save();
     
         }
+    }
     }
 if($photosData){     
         // Store the photos data
